@@ -426,7 +426,7 @@ hotelList.appendChild(card);
 });
 
 }
-
+  
 catch(error){
 
 console.error(error);
@@ -434,14 +434,13 @@ console.error(error);
 hotelList.innerHTML=`
 <div class="error">
 <h2>Unable to load hotels</h2>
-<p style="margin-top:8px">
-Please try again.
+<p style="margin-top:8px;word-break:break-word">
+${escapeHTML(error.message || error)}
 </p>
 </div>
 `;
 
-resultText.textContent=
-"There was a problem loading hotels.";
+resultText.textContent="Hotel loading error";
 
 }
 
