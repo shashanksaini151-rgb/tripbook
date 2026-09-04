@@ -1,1165 +1,609 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>TripBook - Flights, Hotels, Buses & Holiday Packages</title>
-
-<meta name="description" content="TripBook - Book flights, hotels, buses, cabs and holiday packages at great prices.">
-
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial,Helvetica,sans-serif;
-}
-
-body{
-  background:#f5f7fb;
-  color:#172033;
-}
-
-button{
-  cursor:pointer;
-}
-
-header{
-  background:#ffffff;
-  padding:16px 6%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  box-shadow:0 2px 12px rgba(0,0,0,.08);
-  position:sticky;
-  top:0;
-  z-index:1000;
-}
-
-.logo{
-  font-size:27px;
-  font-weight:800;
-  color:#2563eb;
-}
-
-.logo span{
-  color:#f97316;
-}
-
-nav{
-  display:flex;
-  gap:25px;
-  align-items:center;
-}
-
-nav a{
-  text-decoration:none;
-  color:#333;
-  font-weight:600;
-}
-
-.login-btn{
-  background:#2563eb;
-  color:white;
-  border:0;
-  padding:11px 20px;
-  border-radius:8px;
-  font-weight:bold;
-}
-
-.menu{
-  display:none;
-  font-size:25px;
-}
-
-.hero{
-  min-height:480px;
-  padding:70px 6% 90px;
-  background:linear-gradient(135deg,#1d4ed8,#2563eb,#0ea5e9);
-  color:white;
-  text-align:center;
-}
-
-.hero h1{
-  font-size:46px;
-  margin-bottom:15px;
-}
-
-.hero p{
-  font-size:18px;
-  opacity:.95;
-  margin-bottom:35px;
-}
-
-.search-box{
-  background:white;
-  color:#222;
-  max-width:1050px;
-  margin:auto;
-  border-radius:16px;
-  padding:20px;
-  box-shadow:0 15px 40px rgba(0,0,0,.2);
-}
-
-.tabs{
-  display:flex;
-  gap:10px;
-  margin-bottom:20px;
-  overflow:auto;
-}
-
-.tab{
-  border:0;
-  background:#eef2ff;
-  padding:12px 20px;
-  border-radius:8px;
-  font-weight:bold;
-  white-space:nowrap;
-}
-
-.tab.active{
-  background:#2563eb;
-  color:white;
-}
-
-.fields{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-}
-
-.field{
-  text-align:left;
-}
-
-.field label{
-  display:block;
-  font-size:13px;
-  color:#666;
-  margin-bottom:6px;
-  font-weight:bold;
-}
-
-.field input,
-.field select{
-  width:100%;
-  padding:13px;
-  border:1px solid #ddd;
-  border-radius:8px;
-  outline:none;
-}
-
-.search-btn{
-  width:100%;
-  margin-top:16px;
-  padding:15px;
-  background:#f97316;
-  border:0;
-  color:white;
-  border-radius:9px;
-  font-size:17px;
-  font-weight:bold;
-}
-
-section{
-  padding:60px 6%;
-}
-
-.section-title{
-  text-align:center;
-  margin-bottom:35px;
-}
-
-.section-title h2{
-  font-size:32px;
-  margin-bottom:8px;
-}
-
-.section-title p{
-  color:#667085;
-}
-
-.destinations{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:20px;
-}
-
-.destination{
-  height:210px;
-  border-radius:15px;
-  overflow:hidden;
-  position:relative;
-  background:linear-gradient(135deg,#334155,#0f172a);
-  color:white;
-  display:flex;
-  align-items:flex-end;
-  padding:20px;
-  transition:.3s;
-}
-
-.destination:hover{
-  transform:translateY(-5px);
-}
-
-.destination h3{
-  font-size:22px;
-}
-
-.destination p{
-  margin-top:5px;
-  opacity:.9;
-}
-
-.cards{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:22px;
-}
-
-.card{
-  background:white;
-  border-radius:15px;
-  overflow:hidden;
-  box-shadow:0 4px 18px rgba(0,0,0,.08);
-  transition:.3s;
-}
-
-.card:hover{
-  transform:translateY(-5px);
-}
-
-.card-img{
-  height:170px;
-  background:linear-gradient(135deg,#93c5fd,#2563eb);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:55px;
-}
-
-.card-body{
-  padding:20px;
-}
-
-.card-body h3{
-  margin-bottom:8px;
-}
-
-.price{
-  color:#2563eb;
-  font-size:22px;
-  font-weight:bold;
-  margin:12px 0;
-}
-
-.card-btn{
-  width:100%;
-  padding:12px;
-  border:0;
-  border-radius:8px;
-  background:#2563eb;
-  color:white;
-  font-weight:bold;
-}
-
-.features{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:20px;
-}
-
-.feature{
-  background:white;
-  padding:25px;
-  border-radius:15px;
-  text-align:center;
-  box-shadow:0 3px 15px rgba(0,0,0,.06);
-}
-
-.feature-icon{
-  font-size:35px;
-  margin-bottom:12px;
-}
-
-.feature h3{
-  margin-bottom:8px;
-}
-
-.feature p{
-  color:#667085;
-  font-size:14px;
-}
-
-.newsletter{
-  background:#172554;
-  color:white;
-  text-align:center;
-  border-radius:20px;
-  padding:50px 20px;
-}
-
-.newsletter h2{
-  font-size:32px;
-  margin-bottom:10px;
-}
-
-.newsletter p{
-  margin-bottom:20px;
-  opacity:.9;
-}
-
-.newsletter input{
-  padding:14px;
-  width:300px;
-  max-width:80%;
-  border:0;
-  border-radius:8px;
-}
-
-.newsletter button{
-  padding:14px 22px;
-  border:0;
-  background:#f97316;
-  color:white;
-  border-radius:8px;
-  font-weight:bold;
-}
-
-footer{
-  background:#0f172a;
-  color:white;
-  padding:50px 6% 25px;
-}
-
-.footer-grid{
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr 1fr;
-  gap:30px;
-}
-
-footer h3{
-  margin-bottom:15px;
-}
-
-footer p{
-  color:#cbd5e1;
-  line-height:1.7;
-}
-
-footer a{
-  display:block;
-  color:#cbd5e1;
-  text-decoration:none;
-  margin:9px 0;
-}
-
-.copyright{
-  border-top:1px solid #334155;
-  margin-top:30px;
-  padding-top:20px;
-  text-align:center;
-  color:#94a3b8;
-}
-
-/* MODAL */
-
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.65);
-  z-index:3000;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.modal-box{
-  background:white;
-  width:100%;
-  max-width:450px;
-  border-radius:16px;
-  padding:28px;
-  position:relative;
-  max-height:90vh;
-  overflow:auto;
-}
-
-.close{
-  position:absolute;
-  right:18px;
-  top:14px;
-  font-size:25px;
-  cursor:pointer;
-}
-
-.modal-box h2{
-  margin-bottom:20px;
-}
-
-.modal-box input,
-.modal-box select{
-  width:100%;
-  padding:13px;
-  margin:7px 0;
-  border:1px solid #ddd;
-  border-radius:8px;
-}
-
-.modal-box button{
-  width:100%;
-  padding:13px;
-  border:0;
-  border-radius:8px;
-  background:#2563eb;
-  color:white;
-  font-weight:bold;
-  margin-top:10px;
-}
-
-.booking-details{
-  background:#f1f5f9;
-  padding:15px;
-  border-radius:10px;
-  margin:15px 0;
-  line-height:1.8;
-}
-
-/* MOBILE */
-
-@media(max-width:900px){
-
-  nav{
-    display:none;
-  }
-
-  .menu{
-    display:block;
-  }
-
-  .hero h1{
-    font-size:34px;
-  }
-
-  .fields{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .destinations{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .cards{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .features{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .footer-grid{
-    grid-template-columns:1fr 1fr;
-  }
-}
-
-@media(max-width:600px){
-
-  header{
-    padding:14px 5%;
-  }
-
-  .hero{
-    padding:50px 5% 70px;
-  }
-
-  .hero h1{
-    font-size:30px;
-  }
-
-  .hero p{
-    font-size:15px;
-  }
-
-  .fields{
-    grid-template-columns:1fr;
-  }
-
-  .destinations,
-  .cards,
-  .features{
-    grid-template-columns:1fr;
-  }
-
-  section{
-    padding:45px 5%;
-  }
-
-  .section-title h2{
-    font-size:27px;
-  }
-
-  .footer-grid{
-    grid-template-columns:1fr;
-  }
-
-  .newsletter input{
-    width:100%;
-    max-width:100%;
-    margin-bottom:10px;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TripBook - Hotels, Flights & Travel Booking</title>
+
+  <meta name="description"
+        content="TripBook - Search and book hotels, rooms, flights and travel services.">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #222;
+    }
+
+    /* HEADER */
+    header {
+      background: #ffffff;
+      padding: 16px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      color: #e53935;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #333;
+      margin-left: 22px;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: #e53935;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #e53935, #ff7043);
+      min-height: 430px;
+      padding: 80px 7%;
+      text-align: center;
+      color: white;
+    }
+
+    .hero h1 {
+      font-size: 46px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 19px;
+      margin-bottom: 35px;
+    }
+
+    /* SEARCH BOX */
+    .search-box {
+      max-width: 1050px;
+      margin: auto;
+      background: white;
+      padding: 22px;
+      border-radius: 14px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr auto;
+      gap: 12px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+      text-align: left;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .field label {
+      color: #555;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .search-btn {
+      align-self: end;
+      padding: 13px 22px;
+      border: none;
+      border-radius: 8px;
+      background: #e53935;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .search-btn:hover {
+      background: #c62828;
+    }
+
+    /* SERVICES */
+    .section {
+      padding: 55px 7%;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .section-title h2 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .service {
+      background: white;
+      padding: 30px 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.07);
+    }
+
+    .service .icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+
+    .service h3 {
+      margin-bottom: 8px;
+    }
+
+    .service p {
+      color: #666;
+      font-size: 14px;
+    }
+
+    /* HOTEL CARDS */
+    .hotels {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
+
+    .hotel-card {
+      background: white;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    }
+
+    .hotel-image {
+      height: 190px;
+      background: linear-gradient(135deg, #ddd, #aaa);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 55px;
+    }
+
+    .hotel-info {
+      padding: 20px;
+    }
+
+    .hotel-info h3 {
+      margin-bottom: 8px;
+    }
+
+    .location {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .rating {
+      color: #f59e0b;
+      margin-bottom: 12px;
+    }
+
+    .price {
+      font-size: 21px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .book-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #e53935;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* FEATURES */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .feature {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+    }
+
+    .feature h3 {
+      margin-bottom: 8px;
+    }
+
+    .feature p {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #171717;
+      color: white;
+      padding: 35px 7%;
+      text-align: center;
+    }
+
+    footer p {
+      color: #bbb;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    /* MOBILE */
+    @media (max-width: 850px) {
+
+      header {
+        padding: 15px 5%;
+      }
+
+      nav a {
+        margin-left: 10px;
+        font-size: 13px;
+      }
+
+      .hero {
+        padding: 55px 5%;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .search-box {
+        grid-template-columns: 1fr;
+      }
+
+      .search-btn {
+        width: 100%;
+      }
+
+      .services {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hotels {
+        grid-template-columns: 1fr;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 500px) {
+
+      .logo {
+        font-size: 23px;
+      }
+
+      nav a {
+        margin-left: 6px;
+        font-size: 11px;
+      }
+
+      .hero h1 {
+        font-size: 29px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .services {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">Trip<span>Book</span></div>
+  <!-- HEADER -->
+  <header>
 
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#destinations">Destinations</a>
-    <a href="#deals">Deals</a>
-    <a href="#packages">Packages</a>
-    <a href="#contact">Contact</a>
-    <button class="login-btn" onclick="openModal('loginModal')">Login</button>
-  </nav>
+    <div class="logo">TripBook</div>
 
-  <div class="menu" onclick="toggleMenu()">☰</div>
-</header>
+    <nav>
+      <a href="#hotels">Hotels</a>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+    </nav>
 
-<!-- HERO -->
+  </header>
 
-<div class="hero" id="home">
 
-  <h1>Travel More. Spend Less. ✈️</h1>
+  <!-- HERO -->
+  <section class="hero">
 
-  <p>Book flights, hotels, buses, cabs and amazing holiday packages.</p>
+    <h1>Book Your Perfect Trip</h1>
 
-  <div class="search-box">
+    <p>
+      Discover hotels, rooms and travel services with TripBook
+    </p>
 
-    <div class="tabs">
 
-      <button class="tab active" onclick="changeTab(this,'Flights')">
-        ✈️ Flights
-      </button>
-
-      <button class="tab" onclick="changeTab(this,'Hotels')">
-        🏨 Hotels
-      </button>
-
-      <button class="tab" onclick="changeTab(this,'Buses')">
-        🚌 Buses
-      </button>
-
-      <button class="tab" onclick="changeTab(this,'Cabs')">
-        🚕 Cabs
-      </button>
-
-    </div>
-
-    <div class="fields">
+    <!-- SEARCH -->
+    <form class="search-box" action="hotels.html">
 
       <div class="field">
-        <label>From</label>
-        <input id="from" placeholder="Delhi">
+        <label>DESTINATION</label>
+        <input
+          type="text"
+          name="destination"
+          placeholder="City or hotel"
+          required>
       </div>
 
       <div class="field">
-        <label>To</label>
-        <input id="to" placeholder="Mumbai">
+        <label>CHECK-IN</label>
+        <input
+          type="date"
+          name="checkin"
+          required>
       </div>
 
       <div class="field">
-        <label>Travel Date</label>
-        <input id="date" type="date">
+        <label>CHECK-OUT</label>
+        <input
+          type="date"
+          name="checkout"
+          required>
       </div>
 
       <div class="field">
-        <label>Travellers</label>
-        <select id="travellers">
-          <option>1 Traveller</option>
-          <option>2 Travellers</option>
-          <option>3 Travellers</option>
-          <option>4 Travellers</option>
-          <option>5+ Travellers</option>
+        <label>GUESTS & ROOMS</label>
+        <select name="guests">
+          <option>1 Guest, 1 Room</option>
+          <option>2 Guests, 1 Room</option>
+          <option>2 Guests, 2 Rooms</option>
+          <option>3 Guests, 1 Room</option>
+          <option>4 Guests, 2 Rooms</option>
         </select>
       </div>
 
+      <button class="search-btn" type="submit">
+        Search
+      </button>
+
+    </form>
+
+  </section>
+
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+
+    <div class="section-title">
+      <h2>Book With TripBook</h2>
+      <p>Everything you need for your journey</p>
     </div>
 
-    <button class="search-btn" onclick="searchTrip()">
-      🔎 Search Trips
-    </button>
+    <div class="services">
 
-  </div>
-
-</div>
-
-<!-- FEATURES -->
-
-<section>
-
-  <div class="section-title">
-    <h2>Everything For Your Journey</h2>
-    <p>Plan your complete trip from one place.</p>
-  </div>
-
-  <div class="features">
-
-    <div class="feature">
-      <div class="feature-icon">✈️</div>
-      <h3>Flights</h3>
-      <p>Search and compare flight options for your journey.</p>
-    </div>
-
-    <div class="feature">
-      <div class="feature-icon">🏨</div>
-      <h3>Hotels</h3>
-      <p>Discover comfortable stays at great prices.</p>
-    </div>
-
-    <div class="feature">
-      <div class="feature-icon">🚌</div>
-      <h3>Bus Tickets</h3>
-      <p>Find bus routes and convenient travel options.</p>
-    </div>
-
-    <div class="feature">
-      <div class="feature-icon">🏝️</div>
-      <h3>Holiday Packages</h3>
-      <p>Explore memorable holidays and travel packages.</p>
-    </div>
-
-  </div>
-
-</section>
-
-<!-- DESTINATIONS -->
-
-<section id="destinations">
-
-  <div class="section-title">
-    <h2>Popular Destinations</h2>
-    <p>Where will you go next?</p>
-  </div>
-
-  <div class="destinations">
-
-    <div class="destination">
-      <div>
-        <h3>Goa</h3>
-        <p>Beaches & nightlife</p>
+      <div class="service">
+        <div class="icon">🏨</div>
+        <h3>Hotels</h3>
+        <p>Find and book hotels and rooms.</p>
       </div>
-    </div>
 
-    <div class="destination">
-      <div>
-        <h3>Manali</h3>
-        <p>Mountains & adventure</p>
+      <div class="service">
+        <div class="icon">✈️</div>
+        <h3>Flights</h3>
+        <p>Search flights for your journey.</p>
       </div>
-    </div>
 
-    <div class="destination">
-      <div>
-        <h3>Dubai</h3>
-        <p>Luxury & shopping</p>
+      <div class="service">
+        <div class="icon">🚕</div>
+        <h3>Cabs</h3>
+        <p>Book transportation for your trip.</p>
       </div>
-    </div>
 
-    <div class="destination">
-      <div>
-        <h3>Kashmir</h3>
-        <p>Paradise on Earth</p>
+      <div class="service">
+        <div class="icon">🌍</div>
+        <h3>Travel</h3>
+        <p>Plan your complete travel experience.</p>
       </div>
+
     </div>
 
-  </div>
+  </section>
 
-</section>
 
-<!-- DEALS -->
+  <!-- HOTELS -->
+  <section class="section" id="hotels">
 
-<section id="deals">
+    <div class="section-title">
+      <h2>Popular Hotels</h2>
+      <p>Explore stays for your next trip</p>
+    </div>
 
-  <div class="section-title">
-    <h2>🔥 Best Travel Deals</h2>
-    <p>Special offers for your next adventure.</p>
-  </div>
 
-  <div class="cards">
+    <div class="hotels">
 
-    <div class="card">
-      <div class="card-img">🏖️</div>
+      <div class="hotel-card">
 
-      <div class="card-body">
-        <h3>Goa Getaway</h3>
-        <p>3 Nights / 4 Days</p>
+        <div class="hotel-image">
+          🏨
+        </div>
 
-        <div class="price">₹6,999</div>
+        <div class="hotel-info">
 
-        <button class="card-btn"
-          onclick="openBooking('Goa Getaway','₹6,999')">
-          View Deal
-        </button>
+          <h3>Premium City Hotel</h3>
+
+          <div class="location">
+            📍 New Delhi, India
+          </div>
+
+          <div class="rating">
+            ⭐⭐⭐⭐⭐ 4.8
+          </div>
+
+          <div class="price">
+            ₹2,499 <small>/ night</small>
+          </div>
+
+          <button class="book-btn"
+                  onclick="location.href='hotel.html'">
+            View Rooms
+          </button>
+
+        </div>
+
       </div>
-    </div>
 
-    <div class="card">
-      <div class="card-img">🏔️</div>
 
-      <div class="card-body">
-        <h3>Manali Escape</h3>
-        <p>4 Nights / 5 Days</p>
+      <div class="hotel-card">
 
-        <div class="price">₹8,499</div>
+        <div class="hotel-image">
+          🏨
+        </div>
 
-        <button class="card-btn"
-          onclick="openBooking('Manali Escape','₹8,499')">
-          View Deal
-        </button>
+        <div class="hotel-info">
+
+          <h3>Luxury Stay</h3>
+
+          <div class="location">
+            📍 Jaipur, India
+          </div>
+
+          <div class="rating">
+            ⭐⭐⭐⭐⭐ 4.7
+          </div>
+
+          <div class="price">
+            ₹3,199 <small>/ night</small>
+          </div>
+
+          <button class="book-btn"
+                  onclick="location.href='hotel.html'">
+            View Rooms
+          </button>
+
+        </div>
+
       </div>
-    </div>
 
-    <div class="card">
-      <div class="card-img">🌴</div>
 
-      <div class="card-body">
-        <h3>Kerala Holiday</h3>
-        <p>5 Nights / 6 Days</p>
+      <div class="hotel-card">
 
-        <div class="price">₹11,999</div>
+        <div class="hotel-image">
+          🏨
+        </div>
 
-        <button class="card-btn"
-          onclick="openBooking('Kerala Holiday','₹11,999')">
-          View Deal
-        </button>
+        <div class="hotel-info">
+
+          <h3>Comfort Hotel</h3>
+
+          <div class="location">
+            📍 Mumbai, India
+          </div>
+
+          <div class="rating">
+            ⭐⭐⭐⭐ 4.5
+          </div>
+
+          <div class="price">
+            ₹1,999 <small>/ night</small>
+          </div>
+
+          <button class="book-btn"
+                  onclick="location.href='hotel.html'">
+            View Rooms
+          </button>
+
+        </div>
+
       </div>
+
     </div>
 
-  </div>
+  </section>
 
-</section>
 
-<!-- PACKAGES -->
+  <!-- FEATURES -->
+  <section class="section" id="about">
 
-<section id="packages">
+    <div class="section-title">
+      <h2>Why TripBook?</h2>
+    </div>
 
-  <div class="section-title">
-    <h2>Popular Holiday Packages</h2>
-    <p>Handpicked experiences for travellers.</p>
-  </div>
+    <div class="features">
 
-  <div class="cards">
-
-    <div class="card">
-      <div class="card-body">
-        <h3>🏔️ Himachal Adventure</h3>
-        <p>Shimla • Manali • Solang Valley</p>
-        <div class="price">From ₹9,999</div>
-
-        <button class="card-btn"
-          onclick="openBooking('Himachal Adventure','₹9,999')">
-          Explore Package
-        </button>
+      <div class="feature">
+        <h3>🔒 Secure Booking</h3>
+        <p>
+          Your booking information will be protected
+          using a secure backend system.
+        </p>
       </div>
-    </div>
 
-    <div class="card">
-      <div class="card-body">
-        <h3>🏝️ Andaman Escape</h3>
-        <p>Beaches • Islands • Water Sports</p>
-        <div class="price">From ₹18,999</div>
-
-        <button class="card-btn"
-          onclick="openBooking('Andaman Escape','₹18,999')">
-          Explore Package
-        </button>
+      <div class="feature">
+        <h3>💳 Online Payment</h3>
+        <p>
+          We will connect a real payment gateway
+          after the booking system is ready.
+        </p>
       </div>
-    </div>
 
-    <div class="card">
-      <div class="card-body">
-        <h3>🌆 Dubai Experience</h3>
-        <p>City Tour • Desert Safari • Shopping</p>
-        <div class="price">From ₹29,999</div>
-
-        <button class="card-btn"
-          onclick="openBooking('Dubai Experience','₹29,999')">
-          Explore Package
-        </button>
+      <div class="feature">
+        <h3>✅ Booking Confirmation</h3>
+        <p>
+          Confirmed bookings will receive booking
+          details after successful payment.
+        </p>
       </div>
+
     </div>
 
-  </div>
+  </section>
 
-</section>
 
-<!-- NEWSLETTER -->
+  <!-- FOOTER -->
+  <footer>
 
-<section id="contact">
-
-  <div class="newsletter">
-
-    <h2>Get Exclusive Travel Deals</h2>
+    <h2>TripBook</h2>
 
     <p>
-      Subscribe and receive our latest offers and travel inspiration.
+      Your journey starts here.
     </p>
 
-    <input id="email" type="email" placeholder="Enter your email">
-
-    <button onclick="subscribe()">Subscribe</button>
-
-  </div>
-
-</section>
-
-<!-- FOOTER -->
-
-<footer>
-
-  <div class="footer-grid">
-
-    <div>
-      <div class="logo">Trip<span>Book</span></div>
-
-      <p>
-        Your simple travel companion for discovering destinations,
-        deals and memorable journeys.
-      </p>
-    </div>
-
-    <div>
-      <h3>Company</h3>
-      <a href="#home">About Us</a>
-      <a href="#contact">Contact</a>
-      <a href="#">Careers</a>
-    </div>
-
-    <div>
-      <h3>Support</h3>
-      <a href="#">Help Center</a>
-      <a href="#">Cancellation</a>
-      <a href="#">Refund Policy</a>
-    </div>
-
-    <div>
-      <h3>Legal</h3>
-      <a href="#">Terms</a>
-      <a href="#">Privacy</a>
-      <a href="#">Cookies</a>
-    </div>
-
-  </div>
-
-  <div class="copyright">
-    © 2026 TripBook. All rights reserved.
-  </div>
-
-</footer>
-
-<!-- LOGIN MODAL -->
-
-<div class="modal" id="loginModal">
-
-  <div class="modal-box">
-
-    <div class="close" onclick="closeModal('loginModal')">×</div>
-
-    <h2>Welcome to TripBook 👋</h2>
-
-    <input id="loginEmail" type="email" placeholder="Email address">
-
-    <input id="loginPassword" type="password" placeholder="Password">
-
-    <button onclick="loginUser()">Login</button>
-
-    <button onclick="showRegister()">
-      Create New Account
-    </button>
-
-  </div>
-
-</div>
-
-<!-- REGISTER MODAL -->
-
-<div class="modal" id="registerModal">
-
-  <div class="modal-box">
-
-    <div class="close" onclick="closeModal('registerModal')">×</div>
-
-    <h2>Create Account</h2>
-
-    <input id="regName" placeholder="Full name">
-
-    <input id="regEmail" type="email" placeholder="Email address">
-
-    <input id="regPassword" type="password" placeholder="Create password">
-
-    <button onclick="registerUser()">Create Account</button>
-
-  </div>
-
-</div>
-
-<!-- BOOKING MODAL -->
-
-<div class="modal" id="bookingModal">
-
-  <div class="modal-box">
-
-    <div class="close" onclick="closeModal('bookingModal')">×</div>
-
-    <h2>Booking Details</h2>
-
-    <div class="booking-details">
-
-      <strong id="bookingName"></strong><br>
-
-      Price:
-      <strong id="bookingPrice"></strong>
-
-    </div>
-
-    <input id="customerName" placeholder="Your full name">
-
-    <input id="customerPhone" type="tel" placeholder="Mobile number">
-
-    <input id="customerEmail" type="email" placeholder="Email address">
-
-    <button onclick="continueBooking()">
-      Continue Booking
-    </button>
-
-  </div>
-
-</div>
-
-<script>
-
-let currentService = "Flights";
-
-/* TAB */
-
-function changeTab(button, service){
-
-  document.querySelectorAll(".tab")
-    .forEach(tab => tab.classList.remove("active"));
-
-  button.classList.add("active");
-
-  currentService = service;
-
-}
-
-/* SEARCH */
-
-function searchTrip(){
-
-  let from = document.getElementById("from").value.trim();
-  let to = document.getElementById("to").value.trim();
-  let date = document.getElementById("date").value;
-
-  if(!from || !to){
-
-    alert("Please enter From and To locations.");
-
-    return;
-  }
-
-  alert(
-    "Searching " +
-    currentService +
-    " from " +
-    from +
-    " to " +
-    to +
-    (date ? " on " + date : "") +
-    ".\n\nReal booking API will be connected in the next stage."
-  );
-
-}
-
-/* MODAL */
-
-function openModal(id){
-
-  document.getElementById(id).style.display="flex";
-
-}
-
-function closeModal(id){
-
-  document.getElementById(id).style.display="none";
-
-}
-
-/* LOGIN */
-
-function loginUser(){
-
-  let email =
-    document.getElementById("loginEmail").value;
-
-  let password =
-    document.getElementById("loginPassword").value;
-
-  if(!email || !password){
-
-    alert("Please enter email and password.");
-
-    return;
-  }
-
-  alert("Demo login successful! Backend authentication will be added later.");
-
-  closeModal("loginModal");
-
-}
-
-/* REGISTER */
-
-function showRegister(){
-
-  closeModal("loginModal");
-
-  openModal("registerModal");
-
-}
-
-function registerUser(){
-
-  let name =
-    document.getElementById("regName").value;
-
-  let email =
-    document.getElementById("regEmail").value;
-
-  let password =
-    document.getElementById("regPassword").value;
-
-  if(!name || !email || !password){
-
-    alert("Please fill all fields.");
-
-    return;
-  }
-
-  alert("Account created in demo mode!");
-
-  closeModal("registerModal");
-
-}
-
-/* BOOKING */
-
-function openBooking(name, price){
-
-  document.getElementById("bookingName").innerText = name;
-
-  document.getElementById("bookingPrice").innerText = price;
-
-  openModal("bookingModal");
-
-}
-
-function continueBooking(){
-
-  let name =
-    document.getElementById("customerName").value;
-
-  let phone =
-    document.getElementById("customerPhone").value;
-
-  let email =
-    document.getElementById("customerEmail").value;
-
-  if(!name || !phone || !email){
-
-    alert("Please fill all booking details.");
-
-    return;
-  }
-
-  alert(
-    "Booking request received! 🎉\n\n" +
-    "Payment gateway will be connected after approval."
-  );
-
-  closeModal("bookingModal");
-
-}
-
-/* NEWSLETTER */
-
-function subscribe(){
-
-  let email =
-    document.getElementById("email").value;
-
-  if(!email){
-
-    alert("Please enter your email.");
-
-    return;
-  }
-
-  alert("Thank you for subscribing! 🎉");
-
-  document.getElementById("email").value="";
-
-}
-
-/* MOBILE MENU */
-
-function toggleMenu(){
-
-  let nav = document.querySelector("nav");
-
-  if(nav.style.display === "flex"){
-
-    nav.style.display="none";
-
-  }else{
-
-    nav.style.display="flex";
-    nav.style.flexDirection="column";
-    nav.style.position="absolute";
-    nav.style.top="65px";
-    nav.style.right="5%";
-    nav.style.background="white";
-    nav.style.padding="20px";
-    nav.style.borderRadius="12px";
-    nav.style.boxShadow="0 5px 20px rgba(0,0,0,.15)";
-
-  }
-
-}
-
-/* CLOSE MODALS ON OUTSIDE CLICK */
-
-window.onclick = function(event){
-
-  document.querySelectorAll(".modal").forEach(function(modal){
-
-    if(event.target === modal){
-
-      modal.style.display="none";
-
-    }
-
-  });
-
-};
-
-</script>
+    <p>
+      © 2026 TripBook. All rights reserved.
+    </p>
+
+  </footer>
 
 </body>
 </html>
-```
