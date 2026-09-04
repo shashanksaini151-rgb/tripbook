@@ -86,6 +86,7 @@ header a{
   justify-content:center;
   font-size:60px;
   border-radius:10px;
+  overflow:hidden;
 }
 
 .photo:first-child{
@@ -134,6 +135,21 @@ header a{
   background:#c62828;
 }
 
+.book:disabled{
+  background:#aaa;
+  cursor:not-allowed;
+}
+
+.available{
+  color:#2e7d32 !important;
+  font-weight:bold;
+}
+
+.unavailable{
+  color:#c62828 !important;
+  font-weight:bold;
+}
+
 .loading,
 .error{
   background:#fff;
@@ -175,6 +191,10 @@ footer{
 
 header{
   padding:15px 5%;
+}
+
+.logo{
+  font-size:24px;
 }
 
 }
@@ -235,7 +255,7 @@ document.getElementById("hotelContent");
 
 function escapeHTML(value){
 
-return String(value || "")
+return String(value ?? "")
 .replace(/&/g,"&amp;")
 .replace(/</g,"&lt;")
 .replace(/>/g,"&gt;")
@@ -244,6 +264,10 @@ return String(value || "")
 
 }
 
+
+/* =========================
+   LOAD HOTEL + ROOMS
+========================= */
 
 async function loadHotel(){
 
@@ -275,15 +299,19 @@ return;
 
 try{
 
-const url =
+/* =========================
+   GET HOTEL
+========================= */
+
+const hotelUrl =
 SUPABASE_URL +
 "/rest/v1/hotels?id=eq." +
 encodeURIComponent(hotelId) +
 "&available=eq.true&select=*";
 
 
-const response =
-await fetch(url,{
+const hotelResponse =
+await fetch(hotelUrl,{
 
 method:"GET",
 
@@ -295,17 +323,17 @@ headers:{
 });
 
 
-if(!response.ok){
+if(!hotelResponse.ok){
 
 throw new Error(
-await response.text()
+await hotelResponse.text()
 );
 
 }
 
 
 const hotels =
-await response.json();
+await hotelResponse.json();
 
 
 if(!hotels.length){
@@ -321,9 +349,46 @@ const hotel =
 hotels[0];
 
 
-const price =
-Number(hotel.price_per_night || 0);
+/* =========================
+   GET ROOMS
+========================= */
 
+const roomsUrl =
+SUPABASE_URL +
+"/rest/v1/rooms?hotel_id=eq." +
+encodeURIComponent(hotelId) +
+"&select=id,hotel_id,room_name,price_per_night,max_guests,available_rooms&order=price_per_night.asc";
+
+
+const roomsResponse =
+await fetch(roomsUrl,{
+
+method:"GET",
+
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":"Bearer "+SUPABASE_KEY
+}
+
+});
+
+
+if(!roomsResponse.ok){
+
+throw new Error(
+await roomsResponse.text()
+);
+
+}
+
+
+const rooms =
+await roomsResponse.json();
+
+
+/* =========================
+   HOTEL INFORMATION
+========================= */
 
 const rating =
 Number(hotel.rating || 0);
@@ -348,16 +413,128 @@ hotel.description ||
 );
 
 
+/* =========================
+   HOTEL IMAGE
+========================= */
+
 const image =
 hotel.image_url
 ?
 `<img
 src="${escapeHTML(hotel.image_url)}"
 alt="${hotelName}"
-style="width:100%;height:100%;object-fit:cover;border-radius:10px;">`
+style="width:100%;height:100%;object-fit:cover;border-radius:10px;"
+onerror="this.style.display='none';this.parentElement.innerHTML='🏨';">`
 :
 "🏨";
 
+
+/* =========================
+   ROOMS HTML
+========================= */
+
+let roomsHTML = "";
+
+
+if(!rooms.length){
+
+roomsHTML = `
+<div class="room">
+
+<h2>No rooms available</h2>
+
+<p>
+Sorry, rooms are currently unavailable for this hotel.
+</p>
+
+</div>
+`;
+
+}else{
+
+rooms.forEach(room => {
+
+const roomName =
+escapeHTML(room.room_name);
+
+const roomPrice =
+Number(room.price_per_night || 0);
+
+const maxGuests =
+Number(room.max_guests || 0);
+
+const availableRooms =
+Number(room.available_rooms || 0);
+
+const isAvailable =
+availableRooms > 0;
+
+
+roomsHTML += `
+
+<div class="room">
+
+<h2>
+🛏️ ${roomName}
+</h2>
+
+<p>
+👥 Maximum guests: ${maxGuests}
+</p>
+
+<p>
+❄️ Air Conditioning · Wi-Fi · Private Bathroom
+</p>
+
+<p class="${isAvailable ? "available" : "unavailable"}">
+
+${
+isAvailable
+?
+"🟢 " + availableRooms + " rooms available"
+:
+"🔴 Currently unavailable"
+}
+
+</p>
+
+<div class="price">
+
+${
+roomPrice > 0
+?
+"₹" + roomPrice.toLocaleString("en-IN")
+:
+"Price unavailable"
+}
+
+<small style="font-size:13px">
+/ night
+</small>
+
+</div>
+
+<button
+class="book"
+${!isAvailable ? "disabled" : ""}
+onclick="bookRoom(${room.id},${hotel.id})">
+
+${isAvailable ? "Book Now" : "Unavailable"}
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+/* =========================
+   DISPLAY PAGE
+========================= */
 
 hotelContent.innerHTML = `
 
@@ -370,11 +547,15 @@ hotelContent.innerHTML = `
 </div>
 
 <p style="margin-top:10px">
+
 ⭐ ${
 rating > 0
 ? rating.toFixed(1)
 : "New"
-} · ${description}
+}
+
+· ${description}
+
 </p>
 
 </div>
@@ -384,8 +565,8 @@ rating > 0
 
 <strong>TripBook Hotel</strong><br>
 
-Hotel information and pricing are loaded
-from TripBook's hotel database.
+Hotel information, rooms and pricing are
+loaded directly from TripBook's database.
 
 </div>
 
@@ -414,52 +595,7 @@ Choose your room
 
 <div class="rooms">
 
-
-<div class="room">
-
-<h2>
-Standard / Available Room
-</h2>
-
-<p>
-🛏️ Comfortable room
-</p>
-
-<p>
-👥 Suitable for your selected guests
-</p>
-
-<p>
-❄️ Air Conditioning · Wi-Fi · Private Bathroom
-</p>
-
-<div class="price">
-
-${
-price > 0
-?
-"₹" + price.toLocaleString("en-IN")
-:
-"Price unavailable"
-}
-
-<small style="font-size:13px">
-/ night
-</small>
-
-</div>
-
-
-<button
-class="book"
-onclick="bookHotel(${hotel.id})">
-
-Book Now
-
-</button>
-
-</div>
-
+${roomsHTML}
 
 </div>
 
@@ -495,11 +631,17 @@ error.message ||
 }
 
 
-function bookHotel(id){
+/* =========================
+   BOOK ROOM
+========================= */
+
+function bookRoom(roomId,hotelId){
 
 window.location.href =
-"booking.html?id=" +
-encodeURIComponent(id);
+"booking.html?hotel_id=" +
+encodeURIComponent(hotelId) +
+"&room_id=" +
+encodeURIComponent(roomId);
 
 }
 
