@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,6 +115,12 @@
       font-size: 55px;
     }
 
+    .hotel-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
     .hotel-info {
       padding: 18px;
     }
@@ -126,6 +133,13 @@
     .location {
       color: #666;
       font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .description {
+      color: #666;
+      font-size: 13px;
+      line-height: 1.4;
       margin-bottom: 10px;
     }
 
@@ -156,6 +170,21 @@
 
     .view-btn {
       width: 100%;
+    }
+
+    .loading,
+    .error,
+    .no-results {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      color: #666;
+      grid-column: 1 / -1;
+    }
+
+    .error {
+      color: #c62828;
     }
 
     footer {
@@ -196,7 +225,7 @@
 
   <section class="search-bar">
 
-    <form class="search-form">
+    <form class="search-form" id="searchForm">
 
       <input
         type="text"
@@ -211,7 +240,7 @@
         type="date"
         id="checkout">
 
-      <select>
+      <select id="guests">
         <option>1 Guest, 1 Room</option>
         <option>2 Guests, 1 Room</option>
         <option>2 Guests, 2 Rooms</option>
@@ -225,136 +254,20 @@
 
   </section>
 
-
   <main class="container">
 
     <div class="heading">
       <h1>Hotels</h1>
-      <p>Find the right stay for your journey</p>
+      <p id="resultText">Find the right stay for your journey</p>
     </div>
 
-
-    <div class="hotel-list">
-
-
-      <div class="hotel-card">
-
-        <div class="hotel-image">
-          🏨
-        </div>
-
-        <div class="hotel-info">
-
-          <h2>Grand City Hotel</h2>
-
-          <div class="location">
-            📍 New Delhi
-          </div>
-
-          <div class="rating">
-            <span>4.8</span>
-            ⭐⭐⭐⭐⭐
-          </div>
-
-          <div class="price">
-            ₹2,499
-          </div>
-
-          <div class="tax">
-            per night · taxes may apply
-          </div>
-
-          <button
-            class="view-btn"
-            onclick="location.href='hotel.html'">
-            View Rooms
-          </button>
-
-        </div>
-
+    <div class="hotel-list" id="hotelList">
+      <div class="loading">
+        Loading hotels...
       </div>
-
-
-      <div class="hotel-card">
-
-        <div class="hotel-image">
-          🏨
-        </div>
-
-        <div class="hotel-info">
-
-          <h2>Royal Palace Hotel</h2>
-
-          <div class="location">
-            📍 Jaipur
-          </div>
-
-          <div class="rating">
-            <span>4.7</span>
-            ⭐⭐⭐⭐⭐
-          </div>
-
-          <div class="price">
-            ₹3,199
-          </div>
-
-          <div class="tax">
-            per night · taxes may apply
-          </div>
-
-          <button
-            class="view-btn"
-            onclick="location.href='hotel.html'">
-            View Rooms
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <div class="hotel-card">
-
-        <div class="hotel-image">
-          🏨
-        </div>
-
-        <div class="hotel-info">
-
-          <h2>Ocean View Resort</h2>
-
-          <div class="location">
-            📍 Dubai
-          </div>
-
-          <div class="rating">
-            <span>4.6</span>
-            ⭐⭐⭐⭐⭐
-          </div>
-
-          <div class="price">
-            $120
-          </div>
-
-          <div class="tax">
-            per night · taxes may apply
-          </div>
-
-          <button
-            class="view-btn"
-            onclick="location.href='hotel.html'">
-            View Rooms
-          </button>
-
-        </div>
-
-      </div>
-
-
     </div>
 
   </main>
-
 
   <footer>
     <h2>TripBook</h2>
@@ -365,15 +278,281 @@
 
   <script>
 
-    const params = new URLSearchParams(window.location.search);
+    /* ==============================
+       SUPABASE CONFIG
+    ============================== */
 
-    const destination = params.get("destination");
+    const SUPABASE_URL =
+      "https://utrlprmobpbgcyajwfcs.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_gpMN8lRI0-MDtNF1Wk7-Bg_HDVnfTdn";
+
+
+    /* ==============================
+       ELEMENTS
+    ============================== */
+
+    const hotelList = document.getElementById("hotelList");
+    const searchForm = document.getElementById("searchForm");
+    const destinationInput = document.getElementById("destination");
+    const resultText = document.getElementById("resultText");
+
+
+    /* ==============================
+       LOAD HOTELS
+    ============================== */
+
+    async function loadHotels(destination = "") {
+
+      hotelList.innerHTML = `
+        <div class="loading">
+          Loading hotels...
+        </div>
+      `;
+
+      try {
+
+        let url =
+          SUPABASE_URL +
+          "/rest/v1/hotels?available=eq.true&select=*";
+
+        if (destination.trim() !== "") {
+
+          const city = encodeURIComponent(destination.trim());
+
+          url += "&city=ilike." + city;
+
+        }
+
+        url += "&order=id.asc";
+
+
+        const response = await fetch(url, {
+
+          method: "GET",
+
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + SUPABASE_KEY
+          }
+
+        });
+
+
+        if (!response.ok) {
+
+          const errorText = await response.text();
+
+          throw new Error(errorText);
+
+        }
+
+
+        const hotels = await response.json();
+
+
+        if (!hotels.length) {
+
+          hotelList.innerHTML = `
+            <div class="no-results">
+              <h2>No hotels found</h2>
+              <p style="margin-top:8px">
+                Try another destination.
+              </p>
+            </div>
+          `;
+
+          resultText.textContent =
+            "No hotels found for this destination.";
+
+          return;
+        }
+
+
+        resultText.textContent =
+          hotels.length + " hotel(s) available";
+
+
+        hotelList.innerHTML = "";
+
+
+        hotels.forEach(hotel => {
+
+          const price =
+            Number(hotel.price_per_night || 0);
+
+          const rating =
+            Number(hotel.rating || 0);
+
+
+          const imageHTML =
+            hotel.image_url
+              ? `<img src="${hotel.image_url}" alt="${escapeHTML(hotel.name)}">`
+              : `🏨`;
+
+
+          const card = document.createElement("div");
+
+          card.className = "hotel-card";
+
+
+          card.innerHTML = `
+
+            <div class="hotel-image">
+              ${imageHTML}
+            </div>
+
+            <div class="hotel-info">
+
+              <h2>
+                ${escapeHTML(hotel.name)}
+              </h2>
+
+              <div class="location">
+                📍 ${escapeHTML(hotel.city)}, ${escapeHTML(hotel.country)}
+              </div>
+
+              <div class="description">
+                ${escapeHTML(hotel.description || "")}
+              </div>
+
+              <div class="rating">
+                <span>${rating.toFixed(1)}</span>
+                ⭐⭐⭐⭐⭐
+              </div>
+
+              <div class="price">
+                ${formatPrice(price)}
+              </div>
+
+              <div class="tax">
+                per night · taxes may apply
+              </div>
+
+              <button
+                class="view-btn"
+                onclick="viewHotel(${hotel.id})">
+                View Rooms
+              </button>
+
+            </div>
+          `;
+
+
+          hotelList.appendChild(card);
+
+        });
+
+      }
+
+      catch (error) {
+
+        console.error("Supabase error:", error);
+
+        hotelList.innerHTML = `
+          <div class="error">
+            <h2>Unable to load hotels</h2>
+            <p style="margin-top:8px">
+              Please try again.
+            </p>
+          </div>
+        `;
+
+        resultText.textContent =
+          "There was a problem loading hotels.";
+
+      }
+
+    }
+
+
+    /* ==============================
+       VIEW HOTEL
+    ============================== */
+
+    function viewHotel(id) {
+
+      location.href =
+        "hotel.html?id=" + encodeURIComponent(id);
+
+    }
+
+
+    /* ==============================
+       SEARCH
+    ============================== */
+
+    searchForm.addEventListener("submit", function(event) {
+
+      event.preventDefault();
+
+      const destination =
+        destinationInput.value.trim();
+
+      loadHotels(destination);
+
+    });
+
+
+    /* ==============================
+       HELPERS
+    ============================== */
+
+    function formatPrice(price) {
+
+      if (!price || price <= 0) {
+
+        return "Price unavailable";
+
+      }
+
+      return "₹" +
+        price.toLocaleString("en-IN", {
+          maximumFractionDigits: 0
+        });
+
+    }
+
+
+    function escapeHTML(value) {
+
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* ==============================
+       READ URL SEARCH
+    ============================== */
+
+    const params =
+      new URLSearchParams(window.location.search);
+
+    const destination =
+      params.get("destination");
+
 
     if (destination) {
-      document.getElementById("destination").value = destination;
+
+      destinationInput.value =
+        destination;
+
+      loadHotels(destination);
+
+    } else {
+
+      loadHotels();
+
     }
 
   </script>
 
 </body>
 </html>
+```
