@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TripBook - Payment</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f7fb;
+      color: #222;
+    }
+
+    header {
+      background: linear-gradient(135deg, #2563eb, #06b6d4);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 28px;
+    }
+
+    header p {
+      margin-top: 6px;
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 35px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    .card h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #1d4ed8;
+    }
+
+    .detail {
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid #eee;
+      font-size: 16px;
+    }
+
+    .detail:last-of-type {
+      border-bottom: none;
+    }
+
+    .label {
+      color: #666;
+    }
+
+    .value {
+      font-weight: bold;
+    }
+
+    .amount {
+      margin-top: 20px;
+      padding: 18px;
+      background: #eff6ff;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 20px;
+      font-weight: bold;
+      color: #1d4ed8;
+    }
+
+    .payment-box {
+      margin-top: 25px;
+    }
+
+    .payment-box h3 {
+      margin-bottom: 15px;
+    }
+
+    .method {
+      border: 2px solid #e5e7eb;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .method:hover {
+      border-color: #2563eb;
+      background: #f8fbff;
+    }
+
+    .pay-btn {
+      width: 100%;
+      margin-top: 20px;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #2563eb, #06b6d4);
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .pay-btn:hover {
+      opacity: 0.9;
+    }
+
+    .back-btn {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    .notice {
+      margin-top: 18px;
+      padding: 12px;
+      background: #fff7ed;
+      border-radius: 10px;
+      color: #9a3412;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    #success {
+      display: none;
+      margin-top: 20px;
+      padding: 18px;
+      background: #ecfdf5;
+      color: #047857;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>TripBook</h1>
+  <p>Secure Booking Payment</p>
+</header>
+
+<div class="container">
+
+  <div class="card">
+
+    <h2>Complete Your Booking</h2>
+
+    <div class="detail">
+      <span class="label">Hotel ID</span>
+      <span class="value" id="hotelId">-</span>
+    </div>
+
+    <div class="detail">
+      <span class="label">Room ID</span>
+      <span class="value" id="roomId">-</span>
+    </div>
+
+    <div class="detail">
+      <span class="label">Booking Status</span>
+      <span class="value">Pending</span>
+    </div>
+
+    <div class="amount">
+      <span>Total Amount</span>
+      <span id="amount">₹0</span>
+    </div>
+
+    <div class="payment-box">
+
+      <h3>Select Payment Method</h3>
+
+      <div class="method">
+        💳 Credit / Debit Card
+      </div>
+
+      <div class="method">
+        📱 UPI
+      </div>
+
+      <div class="method">
+        🏦 Net Banking
+      </div>
+
+      <button class="pay-btn" onclick="payNow()">
+        Pay Now
+      </button>
+
+    </div>
+
+    <div class="notice">
+      🔒 Your payment information is protected.
+    </div>
+
+    <div id="success">
+      ✅ Payment page is working successfully!
+    </div>
+
+    <a href="javascript:history.back()" class="back-btn">
+      ← Go Back
+    </a>
+
+  </div>
+
+</div>
+
+<script>
+
+  // URL se hotel_id aur room_id lena
+  const params = new URLSearchParams(window.location.search);
+
+  const hotelId = params.get("hotel_id");
+  const roomId = params.get("room_id");
+
+  document.getElementById("hotelId").textContent =
+    hotelId || "Not available";
+
+  document.getElementById("roomId").textContent =
+    roomId || "Not available";
+
+
+  // Temporary amount
+  // Baad me Supabase room price se automatically aayega
+  const amount = 0;
+
+  document.getElementById("amount").textContent =
+    "₹" + amount;
+
+
+  function payNow() {
+
+    alert(
+      "Payment gateway abhi setup nahi hua hai. Payment system next step me Razorpay ke saath connect karenge."
+    );
+
+    document.getElementById("success").style.display = "block";
+  }
+
+</script>
+
+</body>
+</html>
