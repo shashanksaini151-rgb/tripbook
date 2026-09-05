@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+0<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -345,15 +345,7 @@ try{
 
 let url =
 SUPABASE_URL +
-  "/rest/v1/hotels?select=*";
-
-if(destination.trim() !== ""){
-
-const city =
-encodeURIComponent(destination.trim());
-
-url +=
-"&city=ilike." + city;
+"/rest/v1/hotels?select=*&order=id.asc";
 
 }
 
