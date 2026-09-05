@@ -21,10 +21,8 @@ async function loadHotels(destination=""){
     });
 
     if(!response.ok){
-
       const errorText = await response.text();
       throw new Error(errorText);
-
     }
 
     const hotels = await response.json();
@@ -46,7 +44,6 @@ async function loadHotels(destination=""){
 
       resultText.textContent = "No hotels found.";
       return;
-
     }
 
     resultText.textContent =
@@ -89,8 +86,8 @@ async function loadHotels(destination=""){
           </h2>
 
           <div class="location">
-            📍 ${escapeHTML(hotel.city)},
-            ${escapeHTML(hotel.country)}
+            📍 ${escapeHTML(hotel.city || "")}
+            ${hotel.country ? ", " + escapeHTML(hotel.country) : ""}
           </div>
 
           <div class="description">
