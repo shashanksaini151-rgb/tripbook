@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shashanksaini151-rgb.github.io/tripbook/sitemap.xml
