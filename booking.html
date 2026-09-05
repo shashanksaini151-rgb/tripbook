@@ -1,460 +1,1419 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Booking - TripBook</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<title>Booking - TripBook</title>
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #222;
-    }
+<style>
 
-    header {
-      background: #fff;
-      padding: 16px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,.08);
-    }
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-    .logo {
-      color: #e53935;
-      font-size: 28px;
-      font-weight: bold;
-      text-decoration: none;
-    }
+body{
+  font-family:Arial,sans-serif;
+  background:#f5f7fb;
+  color:#222;
+}
 
-    header a {
-      text-decoration: none;
-      color: #333;
-      font-weight: bold;
-    }
+header{
+  background:#fff;
+  padding:16px 7%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
 
-    .container {
-      width: 90%;
-      max-width: 1100px;
-      margin: 35px auto;
-    }
+.logo{
+  font-size:28px;
+  font-weight:bold;
+  color:#e53935;
+  text-decoration:none;
+}
 
-    .page-title {
-      margin-bottom: 25px;
-    }
+header a{
+  text-decoration:none;
+  color:#333;
+  font-weight:bold;
+}
 
-    .page-title h1 {
-      font-size: 32px;
-      margin-bottom: 8px;
-    }
+.container{
+  width:92%;
+  max-width:1050px;
+  margin:30px auto;
+}
 
-    .page-title p {
-      color: #666;
-    }
+.page-title{
+  margin-bottom:20px;
+}
 
-    .booking-layout {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr;
-      gap: 25px;
-    }
+.page-title h1{
+  font-size:32px;
+  margin-bottom:8px;
+}
 
-    .card {
-      background: #fff;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 3px 15px rgba(0,0,0,.07);
-      margin-bottom: 20px;
-    }
+.page-title p{
+  color:#666;
+}
 
-    .card h2 {
-      margin-bottom: 20px;
-      font-size: 21px;
-    }
+.grid{
+  display:grid;
+  grid-template-columns:1.3fr .7fr;
+  gap:25px;
+}
 
-    .form-group {
-      margin-bottom: 16px;
-    }
+.card{
+  background:#fff;
+  padding:25px;
+  border-radius:14px;
+  box-shadow:0 3px 15px rgba(0,0,0,.07);
+  margin-bottom:20px;
+}
 
-    label {
-      display: block;
-      margin-bottom: 7px;
-      font-weight: bold;
-      font-size: 14px;
-    }
+.card h2{
+  margin-bottom:20px;
+}
 
-    input,
-    select {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #ddd;
-      border-radius: 7px;
-      font-size: 15px;
-    }
+.hotel-name{
+  font-size:22px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
 
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-    }
+.location{
+  color:#666;
+  margin-bottom:15px;
+}
 
-    .hotel-summary {
-      border-bottom: 1px solid #eee;
-      padding-bottom: 18px;
-      margin-bottom: 18px;
-    }
+.room-name{
+  font-size:18px;
+  font-weight:bold;
+}
 
-    .hotel-summary h2 {
-      margin-bottom: 8px;
-    }
+.room-price{
+  color:#e53935;
+  font-weight:bold;
+  margin-top:8px;
+}
 
-    .hotel-summary p {
-      color: #666;
-      margin: 6px 0;
-      font-size: 14px;
-    }
+.form-group{
+  margin-bottom:17px;
+}
 
-    .summary-line {
-      display: flex;
-      justify-content: space-between;
-      margin: 13px 0;
-      color: #555;
-    }
+label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:7px;
+}
 
-    .total {
-      border-top: 1px solid #ddd;
-      margin-top: 18px;
-      padding-top: 18px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 22px;
-      font-weight: bold;
-    }
+input,
+select{
+  width:100%;
+  padding:13px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  font-size:16px;
+  outline:none;
+}
 
-    .pay-btn {
-      width: 100%;
-      margin-top: 20px;
-      padding: 15px;
-      background: #e53935;
-      color: white;
-      border: 0;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+input:focus,
+select:focus{
+  border-color:#e53935;
+}
 
-    .pay-btn:hover {
-      background: #c62828;
-    }
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
 
-    .secure {
-      text-align: center;
-      color: #666;
-      font-size: 13px;
-      margin-top: 12px;
-    }
+.summary-row{
+  display:flex;
+  justify-content:space-between;
+  margin:13px 0;
+  color:#555;
+}
 
-    .notice {
-      background: #fff8e1;
-      color: #765b00;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      line-height: 1.5;
-      font-size: 14px;
-    }
+.total{
+  border-top:1px solid #ddd;
+  padding-top:18px;
+  margin-top:18px;
+  display:flex;
+  justify-content:space-between;
+  font-size:22px;
+  font-weight:bold;
+}
 
-    footer {
-      margin-top: 50px;
-      background: #171717;
-      color: white;
-      text-align: center;
-      padding: 30px;
-    }
+.total span:last-child{
+  color:#e53935;
+}
 
-    footer p {
-      color: #bbb;
-      margin-top: 8px;
-    }
+.button{
+  width:100%;
+  border:0;
+  background:#e53935;
+  color:#fff;
+  padding:15px;
+  border-radius:8px;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:15px;
+}
 
-    @media (max-width: 750px) {
+.button:hover{
+  background:#c62828;
+}
 
-      .booking-layout {
-        grid-template-columns: 1fr;
-      }
+.button:disabled{
+  background:#aaa;
+  cursor:not-allowed;
+}
 
-      .row {
-        grid-template-columns: 1fr;
-      }
+.notice{
+  background:#fff8e1;
+  color:#7a5b00;
+  padding:14px;
+  border-radius:8px;
+  line-height:1.5;
+  margin-bottom:20px;
+}
 
-      .container {
-        width: 92%;
-      }
+.loading{
+  background:#fff;
+  padding:30px;
+  text-align:center;
+  border-radius:12px;
+}
 
-      header {
-        padding: 15px 5%;
-      }
-    }
-  </style>
+.error{
+  background:#ffebee;
+  color:#c62828;
+  padding:18px;
+  border-radius:10px;
+  margin-bottom:20px;
+}
+
+.success{
+  background:#e8f5e9;
+  color:#256029;
+  padding:20px;
+  border-radius:10px;
+  margin-bottom:20px;
+}
+
+.small{
+  font-size:13px;
+  color:#777;
+  line-height:1.5;
+}
+
+footer{
+  margin-top:50px;
+  background:#171717;
+  color:#fff;
+  text-align:center;
+  padding:30px;
+}
+
+@media(max-width:750px){
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .row{
+    grid-template-columns:1fr;
+  }
+
+  header{
+    padding:15px 5%;
+  }
+
+  .logo{
+    font-size:24px;
+  }
+
+  .page-title h1{
+    font-size:27px;
+  }
+
+}
+
+</style>
+
 </head>
 
 <body>
 
 <header>
-  <a href="index.html" class="logo">TripBook</a>
-  <a href="hotel.html">← Back to Hotel</a>
+
+<a href="index.html" class="logo">
+TripBook
+</a>
+
+<a href="hotels.html">
+← Hotels
+</a>
+
 </header>
 
 
 <main class="container">
 
-  <div class="page-title">
-    <h1>Complete Your Booking</h1>
-    <p>Enter your details to continue.</p>
-  </div>
+<div class="page-title">
 
+<h1>Complete Your Booking</h1>
 
-  <div class="notice">
-    <strong>Important:</strong>
-    This page is currently the booking-flow interface.
-    Live room availability, reservation confirmation and payment
-    will be activated after TripBook is connected to a verified
-    hotel inventory and booking system.
-  </div>
+<p>
+Enter your details to continue with your hotel booking.
+</p>
 
+</div>
 
-  <div class="booking-layout">
 
+<div id="message"></div>
 
-    <!-- CUSTOMER DETAILS -->
 
-    <section>
+<div id="loading" class="loading">
 
-      <div class="card">
+Loading booking details...
 
-        <h2>Guest Information</h2>
+</div>
 
-        <div class="form-group">
-          <label for="name">Full Name</label>
 
-          <input
-            type="text"
-            id="name"
-            placeholder="Enter your full name"
-            required>
-        </div>
+<div id="bookingArea" style="display:none;">
 
+<div class="notice">
 
-        <div class="form-group">
-          <label for="email">Email Address</label>
+<strong>TripBook Booking</strong><br>
 
-          <input
-            type="email"
-            id="email"
-            placeholder="Enter your email"
-            required>
-        </div>
+Please check your dates and guest details carefully before continuing.
 
+</div>
 
-        <div class="form-group">
-          <label for="phone">Mobile Number</label>
 
-          <input
-            type="tel"
-            id="phone"
-            placeholder="Enter mobile number"
-            required>
-        </div>
+<div class="grid">
 
 
-        <div class="row">
+<!-- =========================
+     GUEST DETAILS
+========================= -->
 
-          <div class="form-group">
-            <label for="guests">Guests</label>
+<div>
 
-            <select id="guests">
-              <option>1 Guest</option>
-              <option>2 Guests</option>
-              <option>3 Guests</option>
-              <option>4 Guests</option>
-              <option>5 Guests</option>
-              <option>6 Guests</option>
-            </select>
-          </div>
+<div class="card">
 
+<h2>Guest Details</h2>
 
-          <div class="form-group">
-            <label for="rooms">Rooms</label>
 
-            <select id="rooms">
-              <option>1 Room</option>
-              <option>2 Rooms</option>
-              <option>3 Rooms</option>
-            </select>
-          </div>
+<div class="form-group">
 
-        </div>
+<label for="guestName">
+Full Name
+</label>
 
-      </div>
+<input
+type="text"
+id="guestName"
+placeholder="Enter your full name"
+required
+>
 
+</div>
 
-      <!-- STAY DETAILS -->
 
-      <div class="card">
+<div class="form-group">
 
-        <h2>Stay Details</h2>
+<label for="guestEmail">
+Email Address
+</label>
 
-        <div class="row">
+<input
+type="email"
+id="guestEmail"
+placeholder="Enter your email"
+required
+>
 
-          <div class="form-group">
-            <label for="checkin">Check-in</label>
+</div>
 
-            <input
-              type="date"
-              id="checkin"
-              required>
-          </div>
 
+<div class="form-group">
 
-          <div class="form-group">
-            <label for="checkout">Check-out</label>
+<label for="guestPhone">
+Mobile Number
+</label>
 
-            <input
-              type="date"
-              id="checkout"
-              required>
-          </div>
+<input
+type="tel"
+id="guestPhone"
+placeholder="Enter your mobile number"
+inputmode="numeric"
+required
+>
 
-        </div>
+</div>
 
 
-        <div class="form-group">
+<div class="row">
 
-          <label for="requests">
-            Special Requests (Optional)
-          </label>
+<div class="form-group">
 
-          <input
-            type="text"
-            id="requests"
-            placeholder="Example: Late check-in">
+<label for="checkIn">
+Check-in
+</label>
 
-        </div>
+<input
+type="date"
+id="checkIn"
+required
+>
 
-      </div>
+</div>
 
-    </section>
 
+<div class="form-group">
 
-    <!-- BOOKING SUMMARY -->
+<label for="checkOut">
+Check-out
+</label>
 
-    <aside>
+<input
+type="date"
+id="checkOut"
+required
+>
 
-      <div class="card">
+</div>
 
-        <div class="hotel-summary">
+</div>
 
-          <h2>Grand City Hotel</h2>
 
-          <p>📍 New Delhi, India</p>
+<div class="form-group">
 
-          <p>🛏️ Deluxe Room</p>
+<label for="guests">
+Number of Guests
+</label>
 
-          <p>👥 2 Guests · 1 Room</p>
+<select id="guests">
 
-        </div>
+<option value="1">1 Guest</option>
+<option value="2">2 Guests</option>
+<option value="3">3 Guests</option>
+<option value="4">4 Guests</option>
+<option value="5">5 Guests</option>
+<option value="6">6 Guests</option>
 
+</select>
 
-        <div class="summary-line">
-          <span>Room</span>
-          <strong>₹2,499</strong>
-        </div>
+</div>
 
+</div>
 
-        <div class="summary-line">
-          <span>Taxes & fees</span>
-          <strong>Calculated at checkout</strong>
-        </div>
 
+<div class="card">
 
-        <div class="total">
-          <span>Room Price</span>
-          <span>₹2,499</span>
-        </div>
+<h2>Booking Information</h2>
 
+<p class="small">
 
-        <button
-          class="pay-btn"
-          onclick="continueBooking()">
+Your booking request will first be saved with a
+<strong>pending</strong> payment status.
 
-          Continue to Payment
+Payment integration will be connected in the next step.
 
-        </button>
+</p>
 
+<button
+class="button"
+id="continueButton"
+onclick="createBooking()">
 
-        <div class="secure">
-          🔒 Secure booking process
-        </div>
+Continue to Payment
 
-      </div>
+</button>
 
-    </aside>
+</div>
 
-  </div>
+</div>
+
+
+<!-- =========================
+     BOOKING SUMMARY
+========================= -->
+
+<div>
+
+<div class="card">
+
+<h2>Booking Summary</h2>
+
+
+<div class="hotel-name"
+id="hotelName">
+
+Loading...
+
+</div>
+
+
+<div class="location"
+id="hotelLocation">
+
+Loading...
+
+</div>
+
+
+<div class="room-name"
+id="roomName">
+
+Loading...
+
+</div>
+
+
+<div class="room-price"
+id="roomPrice">
+
+₹0 / night
+
+</div>
+
+
+<hr style="margin:20px 0;border:0;border-top:1px solid #eee;">
+
+
+<div class="summary-row">
+
+<span>Price per night</span>
+
+<strong id="summaryPrice">
+₹0
+</strong>
+
+</div>
+
+
+<div class="summary-row">
+
+<span>Nights</span>
+
+<strong id="summaryNights">
+1
+</strong>
+
+</div>
+
+
+<div class="summary-row">
+
+<span>Guests</span>
+
+<strong id="summaryGuests">
+1
+</strong>
+
+</div>
+
+
+<div class="total">
+
+<span>Total</span>
+
+<span id="totalAmount">
+₹0
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 </main>
 
 
 <footer>
 
-  <h2>TripBook</h2>
+<h2>TripBook</h2>
 
-  <p>Your journey starts here.</p>
+<p style="margin-top:8px;color:#bbb;">
+Your journey starts here.
+</p>
 
-  <p>© 2026 TripBook</p>
+<p style="margin-top:8px;color:#bbb;">
+© 2026 TripBook
+</p>
 
 </footer>
 
 
 <script>
 
-function continueBooking() {
+/* =========================
+   SUPABASE
+========================= */
 
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const checkin = document.getElementById("checkin").value;
-  const checkout = document.getElementById("checkout").value;
+const SUPABASE_URL =
+"https://utrlprmobpbgcyajwfcs.supabase.co";
 
-  if (!name || !email || !phone || !checkin || !checkout) {
+const SUPABASE_KEY =
+"sb_publishable_gpMN8lRI0-MDtNF1Wk7-Bg_HDVnfTdn";
 
-    alert("Please complete all required booking details.");
 
-    return;
-  }
+/* =========================
+   VARIABLES
+========================= */
 
-  if (new Date(checkout) <= new Date(checkin)) {
+let hotel = null;
+let room = null;
 
-    alert("Check-out date must be after check-in date.");
+let hotelId = null;
+let roomId = null;
 
-    return;
-  }
+let pricePerNight = 0;
 
-  alert(
-    "Your booking details are ready. " +
-    "Live payment and hotel confirmation will be enabled after " +
-    "TripBook's verified booking system is connected."
-  );
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const loading =
+document.getElementById("loading");
+
+const bookingArea =
+document.getElementById("bookingArea");
+
+const message =
+document.getElementById("message");
+
+const checkIn =
+document.getElementById("checkIn");
+
+const checkOut =
+document.getElementById("checkOut");
+
+const guests =
+document.getElementById("guests");
+
+const continueButton =
+document.getElementById("continueButton");
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHTML(value){
+
+return String(value ?? "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 
 }
+
+
+/* =========================
+   TODAY
+========================= */
+
+function getToday(){
+
+const date =
+new Date();
+
+const year =
+date.getFullYear();
+
+const month =
+String(date.getMonth()+1)
+.padStart(2,"0");
+
+const day =
+String(date.getDate())
+.padStart(2,"0");
+
+return `${year}-${month}-${day}`;
+
+}
+
+
+/* =========================
+   DATE DIFFERENCE
+========================= */
+
+function calculateNights(){
+
+if(
+!checkIn.value ||
+!checkOut.value
+){
+
+return 0;
+
+}
+
+const start =
+new Date(checkIn.value);
+
+const end =
+new Date(checkOut.value);
+
+const difference =
+end - start;
+
+const nights =
+Math.ceil(
+difference /
+(1000*60*60*24)
+);
+
+return nights > 0
+? nights
+: 0;
+
+}
+
+
+/* =========================
+   UPDATE TOTAL
+========================= */
+
+function updateTotal(){
+
+const nights =
+calculateNights();
+
+const guestCount =
+Number(guests.value || 1);
+
+const total =
+pricePerNight *
+nights;
+
+
+/* Summary */
+
+document.getElementById(
+"summaryNights"
+).textContent =
+nights || 0;
+
+document.getElementById(
+"summaryGuests"
+).textContent =
+guestCount;
+
+document.getElementById(
+"totalAmount"
+).textContent =
+"₹" +
+total.toLocaleString("en-IN");
+
+
+return {
+nights,
+guestCount,
+total
+};
+
+}
+
+
+/* =========================
+   DATE VALIDATION
+========================= */
+
+checkIn.addEventListener(
+"change",
+function(){
+
+if(checkOut.value &&
+checkOut.value <= checkIn.value){
+
+checkOut.value = "";
+
+}
+
+updateTotal();
+
+}
+);
+
+
+checkOut.addEventListener(
+"change",
+function(){
+
+if(
+checkIn.value &&
+checkOut.value <= checkIn.value
+){
+
+message.innerHTML = `
+
+<div class="error">
+
+Check-out date must be after
+the check-in date.
+
+</div>
+
+`;
+
+checkOut.value = "";
+
+return;
+
+}
+
+message.innerHTML = "";
+
+updateTotal();
+
+}
+);
+
+
+guests.addEventListener(
+"change",
+function(){
+
+updateTotal();
+
+}
+);
+
+
+/* =========================
+   LOAD BOOKING
+========================= */
+
+async function loadBooking(){
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+hotelId =
+params.get("hotel_id");
+
+roomId =
+params.get("room_id");
+
+
+if(!hotelId || !roomId){
+
+loading.innerHTML = `
+
+<div class="error">
+
+<h2>Booking information missing</h2>
+
+<p style="margin-top:8px;">
+
+Please go back to the hotel page
+and select a room again.
+
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+try{
+
+/* =========================
+   GET HOTEL
+========================= */
+
+const hotelResponse =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/hotels?id=eq." +
+encodeURIComponent(hotelId) +
+"&available=eq.true&select=*",
+
+{
+
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":
+"Bearer " + SUPABASE_KEY
+}
+
+}
+
+);
+
+
+if(!hotelResponse.ok){
+
+throw new Error(
+await hotelResponse.text()
+);
+
+}
+
+
+const hotels =
+await hotelResponse.json();
+
+
+if(!hotels.length){
+
+throw new Error(
+"Hotel not found."
+);
+
+}
+
+
+hotel =
+hotels[0];
+
+
+/* =========================
+   GET ROOM
+========================= */
+
+const roomResponse =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/rooms?id=eq." +
+encodeURIComponent(roomId) +
+"&hotel_id=eq." +
+encodeURIComponent(hotelId) +
+"&select=*",
+
+{
+
+headers:{
+"apikey":SUPABASE_KEY,
+"Authorization":
+"Bearer " + SUPABASE_KEY
+}
+
+}
+
+);
+
+
+if(!roomResponse.ok){
+
+throw new Error(
+await roomResponse.text()
+);
+
+}
+
+
+const rooms =
+await roomResponse.json();
+
+
+if(!rooms.length){
+
+throw new Error(
+"Room not found."
+);
+
+}
+
+
+room =
+rooms[0];
+
+
+pricePerNight =
+Number(
+room.price_per_night || 0
+);
+
+
+/* =========================
+   SHOW DETAILS
+========================= */
+
+document.getElementById(
+"hotelName"
+).textContent =
+hotel.name;
+
+
+document.getElementById(
+"hotelLocation"
+).textContent =
+"📍 " +
+hotel.city +
+", " +
+hotel.country;
+
+
+document.getElementById(
+"roomName"
+).textContent =
+"🛏️ " +
+room.room_name;
+
+
+document.getElementById(
+"roomPrice"
+).textContent =
+pricePerNight > 0
+?
+"₹" +
+pricePerNight.toLocaleString("en-IN") +
+" / night"
+:
+"Price unavailable";
+
+
+document.getElementById(
+"summaryPrice"
+).textContent =
+pricePerNight > 0
+?
+"₹" +
+pricePerNight.toLocaleString("en-IN")
+:
+"₹0";
+
+
+/* =========================
+   SET DATES
+========================= */
+
+const today =
+getToday();
+
+checkIn.min =
+today;
+
+checkOut.min =
+today;
+
+
+/* =========================
+   SHOW PAGE
+========================= */
+
+loading.style.display =
+"none";
+
+bookingArea.style.display =
+"block";
+
+
+updateTotal();
+
+
+}
+
+catch(error){
+
+console.error(error);
+
+loading.innerHTML = `
+
+<div class="error">
+
+<h2>Unable to load booking</h2>
+
+<p style="margin-top:8px;">
+
+${escapeHTML(
+error.message ||
+"Something went wrong."
+)}
+
+</p>
+
+</div>
+
+`;
+
+}
+
+}
+
+
+/* =========================
+   CREATE BOOKING
+========================= */
+
+async function createBooking(){
+
+message.innerHTML = "";
+
+
+/* Guest details */
+
+const guestName =
+document.getElementById(
+"guestName"
+).value.trim();
+
+const guestEmail =
+document.getElementById(
+"guestEmail"
+).value.trim();
+
+const guestPhone =
+document.getElementById(
+"guestPhone"
+).value.trim();
+
+
+/* Dates */
+
+const checkInDate =
+checkIn.value;
+
+const checkOutDate =
+checkOut.value;
+
+
+/* Guests */
+
+const guestCount =
+Number(
+guests.value || 1
+);
+
+
+/* Validate */
+
+if(!guestName){
+
+message.innerHTML = `
+<div class="error">
+Please enter your full name.
+</div>
+`;
+
+return;
+
+}
+
+
+if(!guestEmail){
+
+message.innerHTML = `
+<div class="error">
+Please enter your email address.
+</div>
+`;
+
+return;
+
+}
+
+
+if(!guestPhone){
+
+message.innerHTML = `
+<div class="error">
+Please enter your mobile number.
+</div>
+`;
+
+return;
+
+}
+
+
+if(!checkInDate ||
+!checkOutDate){
+
+message.innerHTML = `
+<div class="error">
+Please select check-in and check-out dates.
+</div>
+`;
+
+return;
+
+}
+
+
+const nights =
+calculateNights();
+
+
+if(nights <= 0){
+
+message.innerHTML = `
+<div class="error">
+Check-out must be after check-in.
+</div>
+`;
+
+return;
+
+}
+
+
+if(
+room.available_rooms <= 0
+){
+
+message.innerHTML = `
+<div class="error">
+Sorry, this room is currently unavailable.
+</div>
+`;
+
+return;
+
+}
+
+
+if(
+guestCount >
+Number(room.max_guests || 1)
+){
+
+message.innerHTML = `
+
+<div class="error">
+
+This room allows maximum
+${room.max_guests} guests.
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+const totalAmount =
+pricePerNight *
+nights;
+
+
+/* =========================
+   DISABLE BUTTON
+========================= */
+
+continueButton.disabled =
+true;
+
+continueButton.textContent =
+"Saving Booking...";
+
+
+try{
+
+/* =========================
+   BOOKING DATA
+========================= */
+
+const bookingData = {
+
+hotel_id:
+Number(hotelId),
+
+room_id:
+Number(roomId),
+
+guest_name:
+guestName,
+
+guest_email:
+guestEmail,
+
+guest_phone:
+guestPhone,
+
+check_in:
+checkInDate,
+
+check_out:
+checkOutDate,
+
+guests:
+guestCount,
+
+nights:
+nights,
+
+price_per_night:
+pricePerNight,
+
+total_amount:
+totalAmount,
+
+payment_status:
+"pending",
+
+booking_status:
+"pending"
+
+};
+
+
+/* =========================
+   INSERT BOOKING
+========================= */
+
+const response =
+await fetch(
+
+SUPABASE_URL +
+"/rest/v1/bookings",
+
+{
+
+method:"POST",
+
+headers:{
+
+"apikey":
+SUPABASE_KEY,
+
+"Authorization":
+"Bearer " + SUPABASE_KEY,
+
+"Content-Type":
+"application/json",
+
+"Prefer":
+"return=minimal"
+
+},
+
+body:
+JSON.stringify(
+bookingData
+)
+
+}
+
+);
+
+
+if(!response.ok){
+
+throw new Error(
+await response.text()
+);
+
+}
+
+
+/* =========================
+   SUCCESS
+========================= */
+
+message.innerHTML = `
+
+<div class="success">
+
+<strong>
+Booking details saved successfully.
+</strong>
+
+<p style="margin-top:7px;">
+
+Next step: payment.
+
+</p>
+
+</div>
+
+`;
+
+
+/*
+   Temporary:
+   Payment page will be connected
+   in the next step.
+*/
+
+setTimeout(
+function(){
+
+window.location.href =
+"payment.html?hotel_id=" +
+encodeURIComponent(hotelId) +
+"&room_id=" +
+encodeURIComponent(roomId);
+
+},
+1200
+);
+
+
+}
+
+catch(error){
+
+console.error(error);
+
+message.innerHTML = `
+
+<div class="error">
+
+<strong>
+Booking could not be saved.
+</strong>
+
+<p style="margin-top:8px;">
+
+${escapeHTML(
+error.message ||
+"Please try again."
+)}
+
+</p>
+
+</div>
+
+`;
+
+continueButton.disabled =
+false;
+
+continueButton.textContent =
+"Continue to Payment";
+
+}
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+loadBooking();
 
 </script>
 
