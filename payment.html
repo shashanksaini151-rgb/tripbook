@@ -7,150 +7,159 @@
   <title>TripBook - Payment</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
     }
 
-    body {
-      background: #f5f7fb;
-      color: #222;
+    body{
+      font-family:Arial,sans-serif;
+      background:#f4f7fb;
+      color:#222;
     }
 
-    header {
-      background: linear-gradient(135deg, #2563eb, #06b6d4);
-      color: white;
-      padding: 20px;
-      text-align: center;
+    header{
+      background:linear-gradient(135deg,#2563eb,#06b6d4);
+      color:white;
+      text-align:center;
+      padding:18px 10px;
     }
 
-    header h1 {
-      font-size: 28px;
+    header h1{
+      font-size:22px;
     }
 
-    header p {
-      margin-top: 6px;
-      opacity: 0.9;
+    header p{
+      margin-top:6px;
+      font-size:13px;
     }
 
-    .container {
-      max-width: 600px;
-      margin: 35px auto;
-      padding: 20px;
+    .container{
+      max-width:520px;
+      margin:40px auto;
+      padding:0 15px;
     }
 
-    .card {
-      background: white;
-      border-radius: 18px;
-      padding: 25px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    .card{
+      background:white;
+      border-radius:15px;
+      padding:25px 20px;
+      box-shadow:0 5px 25px rgba(0,0,0,.08);
     }
 
-    .card h2 {
-      text-align: center;
-      margin-bottom: 25px;
-      color: #1d4ed8;
+    h2{
+      text-align:center;
+      color:#2855a5;
+      margin-bottom:22px;
+      font-size:20px;
     }
 
-    .detail {
-      display: flex;
-      justify-content: space-between;
-      padding: 14px 0;
-      border-bottom: 1px solid #eee;
-      font-size: 16px;
+    .hotel-name{
+      text-align:center;
+      font-size:18px;
+      font-weight:bold;
+      margin-bottom:5px;
     }
 
-    .detail:last-of-type {
-      border-bottom: none;
+    .room-name{
+      text-align:center;
+      color:#666;
+      margin-bottom:22px;
     }
 
-    .label {
-      color: #666;
+    .row{
+      display:flex;
+      justify-content:space-between;
+      padding:13px 0;
+      border-bottom:1px solid #eee;
+      font-size:14px;
     }
 
-    .value {
-      font-weight: bold;
+    .row span:last-child{
+      font-weight:bold;
     }
 
-    .amount {
-      margin-top: 20px;
-      padding: 18px;
-      background: #eff6ff;
-      border-radius: 12px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 20px;
-      font-weight: bold;
-      color: #1d4ed8;
+    .total{
+      margin-top:18px;
+      padding:16px;
+      background:#eef6ff;
+      border-radius:10px;
+      display:flex;
+      justify-content:space-between;
+      color:#2855a5;
+      font-size:18px;
+      font-weight:bold;
     }
 
-    .payment-box {
-      margin-top: 25px;
+    .section-title{
+      margin-top:25px;
+      margin-bottom:12px;
+      font-weight:bold;
+      font-size:15px;
     }
 
-    .payment-box h3 {
-      margin-bottom: 15px;
+    .method{
+      border:1px solid #ddd;
+      padding:14px;
+      border-radius:9px;
+      margin-bottom:10px;
+      cursor:pointer;
+      background:white;
     }
 
-    .method {
-      border: 2px solid #e5e7eb;
-      padding: 15px;
-      border-radius: 12px;
-      margin-bottom: 12px;
-      cursor: pointer;
+    .method:hover{
+      background:#f5f9ff;
     }
 
-    .method:hover {
-      border-color: #2563eb;
-      background: #f8fbff;
+    .method input{
+      margin-right:8px;
     }
 
-    .pay-btn {
-      width: 100%;
-      margin-top: 20px;
-      padding: 16px;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #2563eb, #06b6d4);
-      color: white;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
+    button{
+      width:100%;
+      border:none;
+      border-radius:9px;
+      padding:14px;
+      margin-top:18px;
+      background:linear-gradient(135deg,#2563eb,#06b6d4);
+      color:white;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
     }
 
-    .pay-btn:hover {
-      opacity: 0.9;
+    button:disabled{
+      opacity:.6;
     }
 
-    .back-btn {
-      display: block;
-      text-align: center;
-      margin-top: 18px;
-      color: #2563eb;
-      text-decoration: none;
+    .secure{
+      text-align:center;
+      margin-top:15px;
+      background:#fff7ed;
+      padding:10px;
+      border-radius:8px;
+      color:#8a5a20;
+      font-size:12px;
     }
 
-    .notice {
-      margin-top: 18px;
-      padding: 12px;
-      background: #fff7ed;
-      border-radius: 10px;
-      color: #9a3412;
-      font-size: 14px;
-      text-align: center;
+    .back{
+      display:block;
+      text-align:center;
+      margin-top:18px;
+      color:#2855a5;
+      text-decoration:none;
+      font-size:14px;
     }
 
-    #success {
-      display: none;
-      margin-top: 20px;
-      padding: 18px;
-      background: #ecfdf5;
-      color: #047857;
-      border-radius: 12px;
-      text-align: center;
-      font-weight: bold;
+    .loading,
+    .error{
+      text-align:center;
+      padding:30px 10px;
+    }
+
+    .error{
+      color:#c62828;
     }
   </style>
 </head>
@@ -164,99 +173,384 @@
 
 <div class="container">
 
-  <div class="card">
+  <div class="card" id="paymentCard">
 
-    <h2>Complete Your Booking</h2>
-
-    <div class="detail">
-      <span class="label">Hotel ID</span>
-      <span class="value" id="hotelId">-</span>
+    <div class="loading">
+      Loading booking details...
     </div>
-
-    <div class="detail">
-      <span class="label">Room ID</span>
-      <span class="value" id="roomId">-</span>
-    </div>
-
-    <div class="detail">
-      <span class="label">Booking Status</span>
-      <span class="value">Pending</span>
-    </div>
-
-    <div class="amount">
-      <span>Total Amount</span>
-      <span id="amount">₹0</span>
-    </div>
-
-    <div class="payment-box">
-
-      <h3>Select Payment Method</h3>
-
-      <div class="method">
-        💳 Credit / Debit Card
-      </div>
-
-      <div class="method">
-        📱 UPI
-      </div>
-
-      <div class="method">
-        🏦 Net Banking
-      </div>
-
-      <button class="pay-btn" onclick="payNow()">
-        Pay Now
-      </button>
-
-    </div>
-
-    <div class="notice">
-      🔒 Your payment information is protected.
-    </div>
-
-    <div id="success">
-      ✅ Payment page is working successfully!
-    </div>
-
-    <a href="javascript:history.back()" class="back-btn">
-      ← Go Back
-    </a>
 
   </div>
 
 </div>
 
+
 <script>
 
-  // URL se hotel_id aur room_id lena
-  const params = new URLSearchParams(window.location.search);
+  /* =========================
+     SUPABASE CONFIG
+  ========================= */
+
+  const SUPABASE_URL =
+    "https://utrlprmobpbgcyajwfcs.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_gpMN8lRI0-MDtNF1Wk7-Bg_HDVnfTdn";
+
+
+  /* =========================
+     GET URL PARAMETERS
+  ========================= */
+
+  const params = new URLSearchParams(
+    window.location.search
+  );
 
   const hotelId = params.get("hotel_id");
   const roomId = params.get("room_id");
 
-  document.getElementById("hotelId").textContent =
-    hotelId || "Not available";
 
-  document.getElementById("roomId").textContent =
-    roomId || "Not available";
+  const paymentCard =
+    document.getElementById("paymentCard");
 
 
-  // Temporary amount
-  // Baad me Supabase room price se automatically aayega
-  const amount = 0;
+  /* =========================
+     LOAD PAYMENT DETAILS
+  ========================= */
 
-  document.getElementById("amount").textContent =
-    "₹" + amount;
+  async function loadPaymentDetails(){
+
+    if(!hotelId || !roomId){
+
+      paymentCard.innerHTML = `
+        <div class="error">
+          <h2>Invalid Booking</h2>
+          <p>Hotel or room information is missing.</p>
+
+          <a class="back" href="hotels.html">
+            ← Go Back
+          </a>
+        </div>
+      `;
+
+      return;
+    }
 
 
-  function payNow() {
+    try{
+
+      /* GET HOTEL */
+
+      const hotelResponse = await fetch(
+        SUPABASE_URL +
+        "/rest/v1/hotels?id=eq." +
+        encodeURIComponent(hotelId) +
+        "&select=id,name,city",
+        {
+          headers:{
+            "apikey":SUPABASE_KEY,
+            "Authorization":"Bearer " + SUPABASE_KEY
+          }
+        }
+      );
+
+
+      if(!hotelResponse.ok){
+
+        throw new Error(
+          "Unable to load hotel information."
+        );
+
+      }
+
+
+      const hotels =
+        await hotelResponse.json();
+
+
+      if(!hotels.length){
+
+        throw new Error(
+          "Hotel not found."
+        );
+
+      }
+
+
+      const hotel =
+        hotels[0];
+
+
+      /* GET ROOM */
+
+      const roomResponse = await fetch(
+        SUPABASE_URL +
+        "/rest/v1/rooms?id=eq." +
+        encodeURIComponent(roomId) +
+        "&select=id,hotel_id,room_name,price_per_night",
+        {
+          headers:{
+            "apikey":SUPABASE_KEY,
+            "Authorization":"Bearer " + SUPABASE_KEY
+          }
+        }
+      );
+
+
+      if(!roomResponse.ok){
+
+        throw new Error(
+          "Unable to load room information."
+        );
+
+      }
+
+
+      const rooms =
+        await roomResponse.json();
+
+
+      if(!rooms.length){
+
+        throw new Error(
+          "Room not found."
+        );
+
+      }
+
+
+      const room =
+        rooms[0];
+
+
+      /* CHECK ROOM BELONGS TO HOTEL */
+
+      if(String(room.hotel_id) !== String(hotelId)){
+
+        throw new Error(
+          "Selected room does not belong to this hotel."
+        );
+
+      }
+
+
+      const price =
+        Number(room.price_per_night || 0);
+
+
+      paymentCard.innerHTML = `
+
+        <h2>Complete Your Booking</h2>
+
+        <div class="hotel-name">
+          ${escapeHTML(hotel.name)}
+        </div>
+
+        <div class="room-name">
+          ${escapeHTML(room.room_name)}
+          · ${escapeHTML(hotel.city || "")}
+        </div>
+
+
+        <div class="row">
+          <span>Hotel</span>
+          <span>${escapeHTML(hotel.name)}</span>
+        </div>
+
+
+        <div class="row">
+          <span>Room</span>
+          <span>${escapeHTML(room.room_name)}</span>
+        </div>
+
+
+        <div class="row">
+          <span>Room ID</span>
+          <span>${room.id}</span>
+        </div>
+
+
+        <div class="row">
+          <span>Price / Night</span>
+          <span>
+            ${price > 0
+              ? "₹" + price.toLocaleString("en-IN")
+              : "Price unavailable"}
+          </span>
+        </div>
+
+
+        <div class="row">
+          <span>Booking Status</span>
+          <span>Pending</span>
+        </div>
+
+
+        <div class="total">
+          <span>Total Amount</span>
+
+          <span>
+            ${
+              price > 0
+              ? "₹" + price.toLocaleString("en-IN")
+              : "₹0"
+            }
+          </span>
+        </div>
+
+
+        <div class="section-title">
+          Select Payment Method
+        </div>
+
+
+        <label class="method">
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="card"
+            checked
+          >
+          💳 Credit / Debit Card
+        </label>
+
+
+        <label class="method">
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="upi"
+          >
+          📱 UPI
+        </label>
+
+
+        <label class="method">
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="netbanking"
+          >
+          🏦 Net Banking
+        </label>
+
+
+        <button onclick="startPayment()">
+          Pay ₹${
+            price > 0
+            ? price.toLocaleString("en-IN")
+            : "0"
+          }
+        </button>
+
+
+        <div class="secure">
+          🔒 Your payment information is protected.
+        </div>
+
+
+        <a
+          class="back"
+          href="javascript:history.back()">
+          ← Go Back
+        </a>
+
+      `;
+
+
+      /* SAVE PRICE FOR NEXT STEP */
+
+      window.selectedHotel =
+        hotel;
+
+      window.selectedRoom =
+        room;
+
+      window.selectedPrice =
+        price;
+
+    }
+
+    catch(error){
+
+      console.error(error);
+
+      paymentCard.innerHTML = `
+
+        <div class="error">
+
+          <h2>Unable to Load Payment</h2>
+
+          <p>
+            ${escapeHTML(
+              error.message ||
+              "Something went wrong."
+            )}
+          </p>
+
+          <a
+            class="back"
+            href="hotels.html">
+            ← Back to Hotels
+          </a>
+
+        </div>
+
+      `;
+
+    }
+
+  }
+
+
+  /* =========================
+     PAYMENT BUTTON
+  ========================= */
+
+  function startPayment(){
+
+    const price =
+      Number(window.selectedPrice || 0);
+
+
+    if(price <= 0){
+
+      alert(
+        "Room price is unavailable. Please select another room."
+      );
+
+      return;
+
+    }
+
 
     alert(
-      "Payment gateway abhi setup nahi hua hai. Payment system next step me Razorpay ke saath connect karenge."
+      "Room price loaded successfully: ₹" +
+      price.toLocaleString("en-IN") +
+      "\n\nNext step: Razorpay payment gateway."
     );
 
-    document.getElementById("success").style.display = "block";
   }
+
+
+  /* =========================
+     HTML ESCAPE
+  ========================= */
+
+  function escapeHTML(value){
+
+    return String(value ?? "")
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+
+  }
+
+
+  /* START */
+
+  loadPaymentDetails();
 
 </script>
 
