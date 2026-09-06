@@ -6,186 +6,101 @@
 
   <title>TripBook - Payment</title>
 
-  <!-- Razorpay Checkout -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <style>
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    body{
-      font-family:Arial,sans-serif;
-      background:#f4f7fb;
-      color:#222;
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #222;
     }
 
-    header{
-      background:linear-gradient(135deg,#2563eb,#06b6d4);
-      color:white;
-      text-align:center;
-      padding:18px 10px;
+    header {
+      background: linear-gradient(135deg, #007bff, #00b4d8);
+      color: white;
+      padding: 20px;
+      text-align: center;
     }
 
-    header h1{
-      font-size:22px;
+    header h1 {
+      margin-bottom: 5px;
     }
 
-    header p{
-      margin-top:6px;
-      font-size:13px;
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
     }
 
-    .container{
-      max-width:520px;
-      margin:40px auto;
-      padding:0 15px;
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
     }
 
-    .card{
-      background:white;
-      border-radius:15px;
-      padding:25px 20px;
-      box-shadow:0 5px 25px rgba(0,0,0,.08);
+    .card h2 {
+      margin-bottom: 15px;
+      color: #007bff;
     }
 
-    h2{
-      text-align:center;
-      color:#2855a5;
-      margin-bottom:22px;
-      font-size:20px;
+    .info {
+      margin: 12px 0;
+      font-size: 16px;
     }
 
-    .hotel-name{
-      text-align:center;
-      font-size:18px;
-      font-weight:bold;
-      margin-bottom:5px;
+    .price {
+      font-size: 28px;
+      font-weight: bold;
+      color: #0a8f3c;
+      margin: 20px 0;
     }
 
-    .room-name{
-      text-align:center;
-      color:#666;
-      margin-bottom:22px;
+    button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #007bff;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
     }
 
-    .row{
-      display:flex;
-      justify-content:space-between;
-      padding:13px 0;
-      border-bottom:1px solid #eee;
-      font-size:14px;
-      gap:15px;
+    button:hover {
+      background: #0056b3;
     }
 
-    .row span:last-child{
-      font-weight:bold;
-      text-align:right;
+    button:disabled {
+      background: #999;
+      cursor: not-allowed;
     }
 
-    .total{
-      margin-top:18px;
-      padding:16px;
-      background:#eef6ff;
-      border-radius:10px;
-      display:flex;
-      justify-content:space-between;
-      color:#2855a5;
-      font-size:18px;
-      font-weight:bold;
+    .success {
+      text-align: center;
+      color: #0a8f3c;
     }
 
-    .section-title{
-      margin-top:25px;
-      margin-bottom:12px;
-      font-weight:bold;
-      font-size:15px;
+    .error {
+      margin-top: 15px;
+      color: #d00000;
+      text-align: center;
     }
 
-    .method{
-      border:1px solid #ddd;
-      padding:14px;
-      border-radius:9px;
-      margin-bottom:10px;
-      cursor:pointer;
-      background:white;
-      display:block;
-    }
-
-    .method:hover{
-      background:#f5f9ff;
-    }
-
-    .method input{
-      margin-right:8px;
-    }
-
-    button{
-      width:100%;
-      border:none;
-      border-radius:9px;
-      padding:14px;
-      margin-top:18px;
-      background:linear-gradient(135deg,#2563eb,#06b6d4);
-      color:white;
-      font-size:16px;
-      font-weight:bold;
-      cursor:pointer;
-    }
-
-    button:disabled{
-      opacity:.6;
-      cursor:not-allowed;
-    }
-
-    .secure{
-      text-align:center;
-      margin-top:15px;
-      background:#fff7ed;
-      padding:10px;
-      border-radius:8px;
-      color:#8a5a20;
-      font-size:12px;
-    }
-
-    .back{
-      display:block;
-      text-align:center;
-      margin-top:18px;
-      color:#2855a5;
-      text-decoration:none;
-      font-size:14px;
-    }
-
-    .loading,
-    .error{
-      text-align:center;
-      padding:30px 10px;
-    }
-
-    .error{
-      color:#c62828;
-    }
-
-    .success{
-      text-align:center;
-      padding:25px 10px;
-    }
-
-    .success h2{
-      color:#16803c;
-    }
-
-    .success-box{
-      background:#ecfdf3;
-      border-radius:10px;
-      padding:15px;
-      margin-top:15px;
-      text-align:left;
-      font-size:14px;
-      line-height:1.8;
+    .test-note {
+      margin-top: 20px;
+      padding: 12px;
+      background: #fff3cd;
+      border-radius: 8px;
+      color: #664d03;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -194,16 +109,43 @@
 
 <header>
   <h1>TripBook</h1>
-  <p>Secure Booking Payment</p>
+  <p>Secure Hotel Booking</p>
 </header>
 
 <div class="container">
 
   <div class="card" id="paymentCard">
 
-    <div class="loading">
-      Loading booking details...
+    <h2>Confirm Your Booking</h2>
+
+    <div class="info">
+      <strong>Hotel:</strong>
+      <span id="hotelName">Loading...</span>
     </div>
+
+    <div class="info">
+      <strong>Room:</strong>
+      <span id="roomName">Loading...</span>
+    </div>
+
+    <div class="info">
+      <strong>Room ID:</strong>
+      <span id="roomId">Loading...</span>
+    </div>
+
+    <div class="price">
+      ₹<span id="roomPrice">0</span> / night
+    </div>
+
+    <button id="payButton" onclick="startPayment()" disabled>
+      Loading Payment...
+    </button>
+
+    <div class="test-note">
+      Test Mode: No real money will be charged.
+    </div>
+
+    <div class="error" id="errorMessage"></div>
 
   </div>
 
@@ -211,683 +153,309 @@
 
 <script>
 
-  /* =========================
-     SUPABASE CONFIG
-  ========================= */
+const SUPABASE_URL =
+  "https://utrlprmobpbgcyajwfcs.supabase.co";
 
-  const SUPABASE_URL =
-    "https://utrlprmobpbgcyajwfcs.supabase.co";
+const SUPABASE_KEY =
+  "sb_publishable_gpMN8lRI0-MDtNF1Wk7-Bg_HDVnfTdn";
 
-  const SUPABASE_KEY =
-    "sb_publishable_gpMN8lRI0-MDtNF1Wk7-Bg_HDVnfTdn";
+const RAZORPAY_KEY_ID =
+  "rzp_test_TYgp9CQra046cp";
 
-
-  /* =========================
-     RAZORPAY TEST KEY ID
-  ========================= */
-
-  const RAZORPAY_KEY_ID =
-    "rzp_test_TYgp9CQra046cp";
+const CREATE_ORDER_URL =
+  "https://utrlprmobpbgcyajwfcs.supabase.co/functions/v1/create-razorpay-order";
 
 
-  /* =========================
-     SUPABASE EDGE FUNCTION
-  ========================= */
+const params = new URLSearchParams(window.location.search);
 
-  const CREATE_ORDER_FUNCTION =
-    SUPABASE_URL +
-    "/functions/v1/create-razorpay-order";
+const hotelId = params.get("hotel_id");
+const roomId = params.get("room_id");
 
 
-  /* =========================
-     URL PARAMETERS
-  ========================= */
-
-  const params =
-    new URLSearchParams(window.location.search);
-
-  const hotelId =
-    params.get("hotel_id");
-
-  const roomId =
-    params.get("room_id");
+let hotel = null;
+let room = null;
 
 
-  const paymentCard =
-    document.getElementById("paymentCard");
+async function loadPaymentDetails() {
 
+  try {
 
-  /* =========================
-     LOAD HOTEL + ROOM
-  ========================= */
-
-  async function loadPaymentDetails(){
-
-    if(!hotelId || !roomId){
-
-      paymentCard.innerHTML = `
-        <div class="error">
-          <h2>Invalid Booking</h2>
-
-          <p>
-            Hotel or room information is missing.
-          </p>
-
-          <a class="back" href="hotels.html">
-            ← Go Back
-          </a>
-        </div>
-      `;
-
-      return;
+    if (!hotelId || !roomId) {
+      throw new Error("Hotel ID or Room ID missing.");
     }
 
-
-    try{
-
-      /* GET HOTEL */
-
-      const hotelResponse = await fetch(
-        SUPABASE_URL +
-        "/rest/v1/hotels?id=eq." +
-        encodeURIComponent(hotelId) +
-        "&select=id,name,city",
-        {
-          method:"GET",
-          headers:{
-            "apikey":SUPABASE_KEY,
-            "Authorization":"Bearer " + SUPABASE_KEY
-          }
+    // Get hotel
+    const hotelResponse = await fetch(
+      `${SUPABASE_URL}/rest/v1/hotels?id=eq.${hotelId}&select=*`,
+      {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`
         }
-      );
-
-
-      if(!hotelResponse.ok){
-        throw new Error(
-          "Unable to load hotel information."
-        );
       }
+    );
+
+    if (!hotelResponse.ok) {
+      throw new Error("Unable to load hotel.");
+    }
+
+    const hotels = await hotelResponse.json();
+
+    if (!hotels.length) {
+      throw new Error("Hotel not found.");
+    }
+
+    hotel = hotels[0];
 
 
-      const hotels =
-        await hotelResponse.json();
-
-
-      if(!hotels.length){
-        throw new Error(
-          "Hotel not found."
-        );
-      }
-
-
-      const hotel =
-        hotels[0];
-
-
-      /* GET ROOM */
-
-      const roomResponse = await fetch(
-        SUPABASE_URL +
-        "/rest/v1/rooms?id=eq." +
-        encodeURIComponent(roomId) +
-        "&select=id,hotel_id,room_name,price_per_night",
-        {
-          method:"GET",
-          headers:{
-            "apikey":SUPABASE_KEY,
-            "Authorization":"Bearer " + SUPABASE_KEY
-          }
+    // Get room
+    const roomResponse = await fetch(
+      `${SUPABASE_URL}/rest/v1/rooms?id=eq.${roomId}&select=*`,
+      {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`
         }
-      );
-
-
-      if(!roomResponse.ok){
-        throw new Error(
-          "Unable to load room information."
-        );
       }
+    );
 
-
-      const rooms =
-        await roomResponse.json();
-
-
-      if(!rooms.length){
-        throw new Error(
-          "Room not found."
-        );
-      }
-
-
-      const room =
-        rooms[0];
-
-
-      /* VERIFY ROOM BELONGS TO HOTEL */
-
-      if(
-        String(room.hotel_id) !==
-        String(hotelId)
-      ){
-        throw new Error(
-          "Selected room does not belong to this hotel."
-        );
-      }
-
-
-      const price =
-        Number(room.price_per_night || 0);
-
-
-      if(price <= 0){
-        throw new Error(
-          "Room price is unavailable."
-        );
-      }
-
-
-      /* SHOW PAYMENT PAGE */
-
-      paymentCard.innerHTML = `
-
-        <h2>
-          Complete Your Booking
-        </h2>
-
-        <div class="hotel-name">
-          ${escapeHTML(hotel.name)}
-        </div>
-
-        <div class="room-name">
-          ${escapeHTML(room.room_name)}
-          ·
-          ${escapeHTML(hotel.city || "")}
-        </div>
-
-
-        <div class="row">
-          <span>Hotel</span>
-          <span>
-            ${escapeHTML(hotel.name)}
-          </span>
-        </div>
-
-
-        <div class="row">
-          <span>Room</span>
-          <span>
-            ${escapeHTML(room.room_name)}
-          </span>
-        </div>
-
-
-        <div class="row">
-          <span>Room ID</span>
-          <span>
-            ${room.id}
-          </span>
-        </div>
-
-
-        <div class="row">
-          <span>Price / Night</span>
-          <span>
-            ₹${price.toLocaleString("en-IN")}
-          </span>
-        </div>
-
-
-        <div class="row">
-          <span>Booking Status</span>
-          <span>
-            Pending
-          </span>
-        </div>
-
-
-        <div class="total">
-          <span>
-            Total Amount
-          </span>
-
-          <span>
-            ₹${price.toLocaleString("en-IN")}
-          </span>
-        </div>
-
-
-        <div class="section-title">
-          Select Payment Method
-        </div>
-
-
-        <label class="method">
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="card"
-            checked
-          >
-          💳 Credit / Debit Card
-        </label>
-
-
-        <label class="method">
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="upi"
-          >
-          📱 UPI
-        </label>
-
-
-        <label class="method">
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="netbanking"
-          >
-          🏦 Net Banking
-        </label>
-
-
-        <button
-          id="payButton"
-          onclick="startPayment()">
-
-          Pay ₹${price.toLocaleString("en-IN")}
-
-        </button>
-
-
-        <div class="secure">
-          🔒 Secure payment powered by Razorpay
-        </div>
-
-
-        <a
-          class="back"
-          href="javascript:history.back()">
-
-          ← Go Back
-
-        </a>
-
-      `;
-
-
-      /* SAVE DATA */
-
-      window.selectedHotel =
-        hotel;
-
-      window.selectedRoom =
-        room;
-
-      window.selectedPrice =
-        price;
-
+    if (!roomResponse.ok) {
+      throw new Error("Unable to load room.");
     }
 
-    catch(error){
+    const rooms = await roomResponse.json();
 
-      console.error(error);
-
-      paymentCard.innerHTML = `
-
-        <div class="error">
-
-          <h2>
-            Unable to Load Payment
-          </h2>
-
-          <p>
-            ${escapeHTML(
-              error.message ||
-              "Something went wrong."
-            )}
-          </p>
-
-          <a
-            class="back"
-            href="hotels.html">
-
-            ← Back to Hotels
-
-          </a>
-
-        </div>
-
-      `;
-
+    if (!rooms.length) {
+      throw new Error("Room not found.");
     }
+
+    room = rooms[0];
+
+
+    document.getElementById("hotelName").textContent =
+      hotel.name || "Hotel";
+
+    document.getElementById("roomName").textContent =
+      room.room_name || "Room";
+
+    document.getElementById("roomId").textContent =
+      room.id;
+
+    document.getElementById("roomPrice").textContent =
+      Number(room.price_per_night).toLocaleString("en-IN");
+
+
+    document.getElementById("payButton").disabled = false;
+
+    document.getElementById("payButton").textContent =
+      `Pay ₹${Number(room.price_per_night).toLocaleString("en-IN")}`;
+
+
+    console.log(
+      "Room price loaded successfully: ₹" +
+      room.price_per_night
+    );
+
+  } catch (error) {
+
+    console.error(error);
+
+    document.getElementById("errorMessage").textContent =
+      error.message;
+
+    document.getElementById("payButton").disabled = true;
 
   }
 
-
-  /* =========================
-     START RAZORPAY PAYMENT
-  ========================= */
-
-  async function startPayment(){
-
-    const price =
-      Number(window.selectedPrice || 0);
+}
 
 
-    const room =
-      window.selectedRoom;
+async function startPayment() {
 
+  try {
 
-    const hotel =
-      window.selectedHotel;
-
-
-    if(!room || !hotel || price <= 0){
-
-      alert(
-        "Room details are not available."
-      );
-
+    if (!room) {
+      alert("Room details are still loading.");
       return;
     }
 
 
-    const payButton =
+    const button =
       document.getElementById("payButton");
 
-
-    if(payButton){
-
-      payButton.disabled = true;
-
-      payButton.textContent =
-        "Creating Secure Order...";
-
-    }
+    button.disabled = true;
+    button.textContent = "Creating Payment...";
 
 
-    try{
+    // Create Razorpay Order
+    const response = await fetch(
+      CREATE_ORDER_URL,
+      {
+        method: "POST",
 
-      /* =========================
-         CREATE RAZORPAY ORDER
-      ========================= */
-
-      const response =
-        await fetch(
-          CREATE_ORDER_FUNCTION,
-          {
-            method:"POST",
-
-            headers:{
-              "Content-Type":"application/json",
-              "apikey":SUPABASE_KEY,
-              "Authorization":
-                "Bearer " + SUPABASE_KEY
-            },
-
-            body:JSON.stringify({
-              room_id:room.id
-            })
-          }
-        );
-
-
-      const data =
-        await response.json();
-
-
-      if(!response.ok){
-
-        throw new Error(
-          data.error ||
-          "Unable to create Razorpay order."
-        );
-
-      }
-
-
-      if(!data.order_id){
-
-        throw new Error(
-          "Razorpay order ID was not received."
-        );
-
-      }
-
-
-      /* =========================
-         RAZORPAY CHECKOUT
-      ========================= */
-
-      const options = {
-
-        key:
-          RAZORPAY_KEY_ID,
-
-        amount:
-          data.amount,
-
-        currency:
-          data.currency || "INR",
-
-        name:
-          "TripBook",
-
-        description:
-          hotel.name +
-          " - " +
-          room.room_name,
-
-        order_id:
-          data.order_id,
-
-
-        handler:
-          function(razorpayResponse){
-
-            showPaymentSuccess(
-              razorpayResponse,
-              data
-            );
-
-          },
-
-
-        modal:{
-          ondismiss:function(){
-
-            if(payButton){
-
-              payButton.disabled = false;
-
-              payButton.textContent =
-                "Pay ₹" +
-                price.toLocaleString("en-IN");
-
-            }
-
-          }
+        headers: {
+          "Content-Type": "application/json",
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`
         },
 
-
-        theme:{
-          color:"#2563eb"
-        }
-
-      };
-
-
-      const razorpay =
-        new Razorpay(options);
+        body: JSON.stringify({
+          room_id: room.id
+        })
+      }
+    );
 
 
-      razorpay.on(
-        "payment.failed",
-        function(response){
-
-          console.error(
-            response.error
-          );
+    const data = await response.json();
 
 
-          alert(
-            "Payment failed.\n\n" +
-            (
-              response.error?.description ||
-              "Please try again."
-            )
-          );
+    if (!response.ok) {
 
-
-          if(payButton){
-
-            payButton.disabled = false;
-
-            payButton.textContent =
-              "Pay ₹" +
-              price.toLocaleString("en-IN");
-
-          }
-
-        }
+      throw new Error(
+        data.error || "Unable to create Razorpay order."
       );
-
-
-      razorpay.open();
 
     }
 
-    catch(error){
 
-      console.error(error);
-
-      alert(
-        "Payment setup failed:\n\n" +
-        (
-          error.message ||
-          "Something went wrong."
-        )
-      );
+    console.log("Razorpay Order:", data);
 
 
-      if(payButton){
+    const options = {
 
-        payButton.disabled = false;
+      key: RAZORPAY_KEY_ID,
 
-        payButton.textContent =
-          "Pay ₹" +
-          price.toLocaleString("en-IN");
+      amount: data.amount,
 
+      currency: data.currency || "INR",
+
+      name: "TripBook",
+
+      description:
+        `${hotel.name} - ${room.room_name}`,
+
+      order_id: data.order_id,
+
+
+      handler: function (paymentResponse) {
+
+        console.log(
+          "Payment Success:",
+          paymentResponse
+        );
+
+
+        document.getElementById("paymentCard").innerHTML = `
+
+          <div class="success">
+
+            <h2>🎉 Payment Successful!</h2>
+
+            <p style="margin-top:15px;">
+              Your TripBook payment was completed
+              successfully in Test Mode.
+            </p>
+
+            <p style="margin-top:15px;">
+              <strong>Payment ID:</strong><br>
+              ${paymentResponse.razorpay_payment_id}
+            </p>
+
+            <p style="margin-top:15px;">
+              <strong>Order ID:</strong><br>
+              ${paymentResponse.razorpay_order_id}
+            </p>
+
+            <p style="margin-top:20px;">
+              Amount Paid:
+              <strong>
+                ₹${Number(data.amount / 100).toLocaleString("en-IN")}
+              </strong>
+            </p>
+
+            <div class="test-note">
+              This is Razorpay Test Mode.
+              No real money was charged.
+            </div>
+
+          </div>
+
+        `;
+
+      },
+
+
+      modal: {
+
+        ondismiss: function () {
+
+          button.disabled = false;
+
+          button.textContent =
+            `Pay ₹${Number(room.price_per_night).toLocaleString("en-IN")}`;
+
+        }
+
+      },
+
+
+      theme: {
+        color: "#007bff"
       }
 
-    }
+    };
+
+
+    const razorpay =
+      new Razorpay(options);
+
+
+    razorpay.on(
+      "payment.failed",
+      function (response) {
+
+        console.error(
+          "Payment failed:",
+          response.error
+        );
+
+        document.getElementById("errorMessage").textContent =
+          response.error.description ||
+          "Payment failed.";
+
+        button.disabled = false;
+
+        button.textContent =
+          `Pay ₹${Number(room.price_per_night).toLocaleString("en-IN")}`;
+
+      }
+    );
+
+
+    razorpay.open();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    document.getElementById("errorMessage").textContent =
+      error.message;
+
+    const button =
+      document.getElementById("payButton");
+
+    button.disabled = false;
+
+    button.textContent =
+      `Pay ₹${Number(room.price_per_night).toLocaleString("en-IN")`;
 
   }
 
-
-  /* =========================
-     PAYMENT SUCCESS SCREEN
-  ========================= */
-
-  function showPaymentSuccess(
-    payment,
-    order
-  ){
-
-    paymentCard.innerHTML = `
-
-      <div class="success">
-
-        <h2>
-          Payment Successful 🎉
-        </h2>
-
-        <p>
-          Your Razorpay test payment was successful.
-        </p>
+}
 
 
-        <div class="success-box">
-
-          <strong>Hotel:</strong>
-          ${escapeHTML(
-            window.selectedHotel.name
-          )}
-
-          <br>
-
-          <strong>Room:</strong>
-          ${escapeHTML(
-            window.selectedRoom.room_name
-          )}
-
-          <br>
-
-          <strong>Amount:</strong>
-          ₹${Number(
-            order.amount / 100
-          ).toLocaleString("en-IN")}
-
-          <br>
-
-          <strong>Order ID:</strong>
-          ${escapeHTML(
-            payment.razorpay_order_id
-          )}
-
-          <br>
-
-          <strong>Payment ID:</strong>
-          ${escapeHTML(
-            payment.razorpay_payment_id
-          )}
-
-        </div>
-
-
-        <div class="secure">
-          ⚠️ Test Mode: No real money has been charged.
-        </div>
-
-
-        <a
-          class="back"
-          href="hotels.html">
-
-          ← Back to Hotels
-
-        </a>
-
-      </div>
-
-    `;
-
-  }
-
-
-  /* =========================
-     HTML ESCAPE
-  ========================= */
-
-  function escapeHTML(value){
-
-    return String(value ?? "")
-      .replace(/&/g,"&amp;")
-      .replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;")
-      .replace(/"/g,"&quot;")
-      .replace(/'/g,"&#039;");
-
-  }
-
-
-  /* =========================
-     START
-  ========================= */
-
-  loadPaymentDetails();
+loadPaymentDetails();
 
 </script>
 
